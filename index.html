@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profil du Coach</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function getUserID() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('userID');
+        }
+
+        function getCoachProfile(userID) {
+            db.collection('users').doc(userID).get().then((doc) => {
+                if (doc.exists) {
+                    document.getElementById('firstName').value = doc.data().firstName;
+                    document.getElementById('lastName').value = doc.data().lastName;
+                } else {
+                    console.log('No such document!');
+                }
+            }).catch((error) => {
+                console.log('Error getting document:', error);
+            });
+        }
+
+        function saveCoachProfile(userID) {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+
+            db.collection('users').doc(userID).set({
+                firstName: firstName,
+                lastName: lastName
+            }).then(() => {
+                alert('Profile updated successfully!');
+            }).catch((error) => {
+                console.error('Error writing document: ', error);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const userID = getUserID();
+            if (userID) {
+                getCoachProfile(userID);
+
+                document.getElementById('saveButton').addEventListener('click', function() {
+                    saveCoachProfile(userID);
+                });
+            } else {
+                alert('No userID found in the URL');
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Profil du Coach</h1>
+    <div>
+        <label>Prénom:</label>
+        <input type="text" id="firstName">
+    </div>
+    <div>
+        <label>Nom:</label>
+        <input type="text" id="lastName">
+    </div>
+    <button id="saveButton">Sauvegarder</button>
+</body>
+</html>
