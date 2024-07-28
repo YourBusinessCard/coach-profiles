@@ -1,56 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil du Coach</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
   <script>
     const firebaseConfig = {
-      apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
+      apiKey: "AlzaSyC9i5SydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
       authDomain: "yourprogram-h00ehw.firebaseapp.com",
       projectId: "yourprogram-h00ehw",
       storageBucket: "yourprogram-h00ehw.appspot.com",
       messagingSenderId: "218168070365",
-      appId: "1:218168070365:web:2f8b8b7b6b7c8e1e123456"
+      appId: "1:218168070365:ios:32d34e78bc8ddef77acb34"
     };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    document.addEventListener("DOMContentLoaded", function () {
+    function getCoachProfile() {
       const urlParams = new URLSearchParams(window.location.search);
-      const userID = urlParams.get('userID');
-
-      if (userID) {
-        db.collection('users').doc(userID).collection('visitcard').doc('visitcarID').get()
-          .then((doc) => {
-            if (doc.exists) {
-              document.getElementById('firstName').innerText = doc.data().firstName || 'Prénom inconnu';
-              document.getElementById('lastName').innerText = doc.data().lastName || 'Nom inconnu';
-              document.getElementById('color').innerText = doc.data().color || 'Couleur inconnue';
-            } else {
-              document.getElementById('firstName').innerText = 'Prénom inconnu';
-              document.getElementById('lastName').innerText = 'Nom inconnu';
-              document.getElementById('color').innerText = 'Couleur inconnue';
-            }
-          })
-          .catch((error) => {
-            console.error("Erreur lors de la récupération du document:", error);
-          });
-      } else {
-        document.getElementById('firstName').innerText = 'Prénom non fourni';
-        document.getElementById('lastName').innerText = 'Nom non fourni';
-        document.getElementById('color').innerText = 'Couleur non fournie';
+      const userId = urlParams.get('userID');
+      
+      if (!userId) {
+        document.getElementById('prenom').textContent = 'Erreur : userID manquant dans l\'URL';
+        document.getElementById('nom').textContent = 'Erreur : userID manquant dans l\'URL';
+        document.getElementById('couleur').textContent = 'Erreur : userID manquant dans l\'URL';
+        return;
       }
-    });
+
+      db.collection('users').doc(userId).collection('visitcard').doc('visitcarID')
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            document.getElementById('prenom').textContent = doc.data().firstName || 'Prénom non trouvé';
+            document.getElementById('nom').textContent = doc.data().lastName || 'Nom non trouvé';
+            document.getElementById('couleur').textContent = doc.data().color || 'Couleur non trouvée';
+          } else {
+            document.getElementById('prenom').textContent = 'Erreur : document non trouvé';
+            document.getElementById('nom').textContent = 'Erreur : document non trouvé';
+            document.getElementById('couleur').textContent = 'Erreur : document non trouvé';
+          }
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération du document :', error);
+          document.getElementById('prenom').textContent = 'Erreur : ' + error.message;
+          document.getElementById('nom').textContent = 'Erreur : ' + error.message;
+          document.getElementById('couleur').textContent = 'Erreur : ' + error.message;
+        });
+    }
+
+    window.onload = getCoachProfile;
   </script>
 </head>
 <body>
   <h1>Profil du Coach</h1>
-  <p>Prénom : <span id="firstName">Chargement...</span></p>
-  <p>Nom : <span id="lastName">Chargement...</span></p>
-  <p>Couleur préférée : <span id="color">Chargement...</span></p>
+  <p>Prénom : <span id="prenom">Chargement...</span></p>
+  <p>Nom : <span id="nom">Chargement...</span></p>
+  <p>Couleur préférée : <span id="couleur">Chargement...</span></p>
 </body>
 </html>
