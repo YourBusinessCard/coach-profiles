@@ -5,6 +5,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
   <script>
+    // Votre configuration Firebase
     const firebaseConfig = {
       apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
       authDomain: "yourprogram-h00ehw.firebaseapp.com",
@@ -13,35 +14,51 @@
       messagingSenderId: "218168070365",
       appId: "1:218168070365:web:bc8ddef77acb34"
     };
+    
+    // Initialiser Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-
+    
+    // Récupérer l'ID de l'utilisateur depuis l'URL
     const userId = new URLSearchParams(window.location.search).get('userID');
-    console.log("UserID:", userId);
+    
+    // Récupérer les données de Firestore
     db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
       if (doc.exists) {
-        console.log('Document data:', doc.data());
-        document.getElementById('firstName').innerText = doc.data().firstName || 'Prénom non disponible';
-        document.getElementById('lastName').innerText = doc.data().lastName || 'Nom non disponible';
-        document.getElementById('color').innerText = doc.data().color || 'Couleur non disponible';
+        document.getElementById('firstName').innerText = doc.data().firstName;
+        document.getElementById('lastName').innerText = doc.data().lastName;
+        document.getElementById('color').innerText = doc.data().color;
       } else {
-        console.log('No such document!');
         document.getElementById('firstName').innerText = 'Données non trouvées';
         document.getElementById('lastName').innerText = 'Données non trouvées';
         document.getElementById('color').innerText = 'Données non trouvées';
       }
     }).catch(error => {
       console.error('Erreur lors de la récupération des données :', error);
-      document.getElementById('firstName').innerText = 'Erreur';
-      document.getElementById('lastName').innerText = 'Erreur';
-      document.getElementById('color').innerText = 'Erreur';
     });
   </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .profile-section {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
   <h1>Profil du Coach</h1>
-  <p>Prénom : <span id="firstName">Chargement...</span></p>
-  <p>Nom : <span id="lastName">Chargement...</span></p>
-  <p>Couleur préférée : <span id="color">Chargement...</span></p>
+  <div class="profile-section">
+    <p>Prénom : <span id="firstName">Chargement...</span></p>
+    <p>Nom : <span id="lastName">Chargement...</span></p>
+    <p>Couleur préférée : <span id="color">Chargement...</span></p>
+  </div>
 </body>
 </html>
