@@ -17,18 +17,24 @@
     const db = firebase.firestore();
 
     const userId = new URLSearchParams(window.location.search).get('userID');
+    console.log("UserID:", userId);
     db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
       if (doc.exists) {
-        document.getElementById('firstName').innerText = doc.data().firstName;
-        document.getElementById('lastName').innerText = doc.data().lastName;
-        document.getElementById('color').innerText = doc.data().color;
+        console.log('Document data:', doc.data());
+        document.getElementById('firstName').innerText = doc.data().firstName || 'Prénom non disponible';
+        document.getElementById('lastName').innerText = doc.data().lastName || 'Nom non disponible';
+        document.getElementById('color').innerText = doc.data().color || 'Couleur non disponible';
       } else {
+        console.log('No such document!');
         document.getElementById('firstName').innerText = 'Données non trouvées';
         document.getElementById('lastName').innerText = 'Données non trouvées';
         document.getElementById('color').innerText = 'Données non trouvées';
       }
     }).catch(error => {
       console.error('Erreur lors de la récupération des données :', error);
+      document.getElementById('firstName').innerText = 'Erreur';
+      document.getElementById('lastName').innerText = 'Erreur';
+      document.getElementById('color').innerText = 'Erreur';
     });
   </script>
 </head>
