@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Profil du Coach</title>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script>
-      const firebaseConfig = {
-          apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
-          authDomain: "yourprogram-h00ehw.firebaseapp.com",
-          projectId: "yourprogram-h00ehw",
-          storageBucket: "yourprogram-h00ehw.appspot.com",
-          messagingSenderId: "218168070365",
-          appId: "1:218168070365:web:fd477ed00d5c31c0f1fc20",
-      };
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+  <title>Profil du Coach</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
+      authDomain: "yourprogram-h00ehw.firebaseapp.com",
+      projectId: "yourprogram-h00ehw",
+      storageBucket: "yourprogram-h00ehw.appspot.com",
+      messagingSenderId: "218168070365",
+      appId: "1:218168070365:ios:32d34e78bc8ddef77acb34"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-      async function getCoachProfile(userID) {
-          const doc = await db.collection('users').doc(userID).collection('visitcard').doc('visitcarID').get();
-          if (doc.exists) {
-              const data = doc.data();
-              document.getElementById('firstName').textContent = data.firstName || 'Prénom inconnu';
-              document.getElementById('lastName').textContent = data.lastName || 'Nom inconnu';
-              document.getElementById('color').style.backgroundColor = data.color || '#ffffff';
-          }
+    function fetchData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const userID = urlParams.get('userID');
+
+      if (userID) {
+        db.collection('users').doc(userID).collection('visitcard').doc('visitcarID')
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              document.getElementById('firstName').innerText = doc.data().firstName || 'Non spécifié';
+              document.getElementById('lastName').innerText = doc.data().lastName || 'Non spécifié';
+              document.getElementById('color').innerText = doc.data().color || 'Non spécifié';
+            } else {
+              document.getElementById('firstName').innerText = 'Non spécifié';
+              document.getElementById('lastName').innerText = 'Non spécifié';
+              document.getElementById('color').innerText = 'Non spécifié';
+            }
+          })
+          .catch((error) => {
+            console.error("Erreur lors de la récupération des données: ", error);
+          });
+      } else {
+        document.getElementById('firstName').innerText = 'ID utilisateur non spécifié';
+        document.getElementById('lastName').innerText = '';
+        document.getElementById('color').innerText = '';
       }
-
-      window.onload = function() {
-          const urlParams = new URLSearchParams(window.location.search);
-          const userID = urlParams.get('userID');
-          if (userID) {
-              getCoachProfile(userID);
-          }
-      };
-    </script>
+    }
+  </script>
 </head>
-<body>
-    <h1>Profil du Coach</h1>
-    <p>Prénom : <span id="firstName">Chargement...</span></p>
-    <p>Nom : <span id="lastName">Chargement...</span></p>
-    <p>Couleur préférée : <span id="color" style="display:inline-block;width:50px;height:50px;background-color:#ffffff;"></span></p>
+<body onload="fetchData()">
+  <h1>Profil du Coach</h1>
+  <p>Prénom : <span id="firstName">Chargement...</span></p>
+  <p>Nom : <span id="lastName">Chargement...</span></p>
+  <p>Couleur préférée : <span id="color">Chargement...</span></p>
 </body>
 </html>
