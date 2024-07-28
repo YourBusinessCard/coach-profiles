@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil du Coach</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
@@ -11,47 +13,37 @@
       projectId: "yourprogram-h00ehw",
       storageBucket: "yourprogram-h00ehw.appspot.com",
       messagingSenderId: "218168070365",
-      appId: "1:218168070365:ios:32d34e78bc8ddef77acb34"
+      appId: "1:218168070365:web:2f8b8b7b6b7c8e1e123456"
     };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Fonction pour lire le paramètre userID depuis l'URL
-    function getQueryParam(param) {
+    document.addEventListener("DOMContentLoaded", function () {
       const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
+      const userID = urlParams.get('userID');
 
-    const userID = getQueryParam('userID');
-
-    // Fonction pour récupérer et afficher les informations du coach
-    function getCoachProfile(userID) {
       if (userID) {
         db.collection('users').doc(userID).collection('visitcard').doc('visitcarID').get()
-          .then(doc => {
+          .then((doc) => {
             if (doc.exists) {
               document.getElementById('firstName').innerText = doc.data().firstName || 'Prénom inconnu';
               document.getElementById('lastName').innerText = doc.data().lastName || 'Nom inconnu';
-              document.getElementById('color').innerText = doc.data().color || 'Couleur non définie';
+              document.getElementById('color').innerText = doc.data().color || 'Couleur inconnue';
             } else {
               document.getElementById('firstName').innerText = 'Prénom inconnu';
               document.getElementById('lastName').innerText = 'Nom inconnu';
-              document.getElementById('color').innerText = 'Couleur non définie';
+              document.getElementById('color').innerText = 'Couleur inconnue';
             }
           })
-          .catch(error => {
-            console.error("Erreur lors de la récupération des données :", error);
+          .catch((error) => {
+            console.error("Erreur lors de la récupération du document:", error);
           });
       } else {
-        document.getElementById('firstName').innerText = 'Aucun ID utilisateur fourni';
-        document.getElementById('lastName').innerText = '';
-        document.getElementById('color').innerText = '';
+        document.getElementById('firstName').innerText = 'Prénom non fourni';
+        document.getElementById('lastName').innerText = 'Nom non fourni';
+        document.getElementById('color').innerText = 'Couleur non fournie';
       }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      getCoachProfile(userID);
     });
   </script>
 </head>
