@@ -5,7 +5,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
   <script>
-    // Votre configuration Firebase
     const firebaseConfig = {
       apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
       authDomain: "yourprogram-h00ehw.firebaseapp.com",
@@ -14,17 +13,15 @@
       messagingSenderId: "218168070365",
       appId: "1:218168070365:web:bc8ddef77acb34"
     };
-    
-    // Initialiser Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    
-    // Récupérer l'ID de l'utilisateur depuis l'URL
+
     const userId = new URLSearchParams(window.location.search).get('userID');
-    
-    // Récupérer les données de Firestore
+    console.log('User ID:', userId); // Log pour vérifier l'ID utilisateur
+
     db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
       if (doc.exists) {
+        console.log('Document data:', doc.data()); // Log pour vérifier les données du document
         document.getElementById('firstName').innerText = doc.data().firstName;
         document.getElementById('lastName').innerText = doc.data().lastName;
         document.getElementById('color').innerText = doc.data().color;
@@ -42,20 +39,18 @@
       font-family: Arial, sans-serif;
       margin: 20px;
     }
-    .profile-section {
+    .card {
       border: 1px solid #ddd;
       padding: 20px;
+      border-radius: 8px;
       margin-bottom: 20px;
-      border-radius: 5px;
-    }
-    h1 {
-      font-size: 24px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
   <h1>Profil du Coach</h1>
-  <div class="profile-section">
+  <div class="card">
     <p>Prénom : <span id="firstName">Chargement...</span></p>
     <p>Nom : <span id="lastName">Chargement...</span></p>
     <p>Couleur préférée : <span id="color">Chargement...</span></p>
