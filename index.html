@@ -13,39 +13,49 @@
       messagingSenderId: "218168070365",
       appId: "1:218168070365:ios:32d34e78bc8ddef77acb34"
     };
+
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    function fetchData() {
+    // Fonction pour lire le paramètre userID depuis l'URL
+    function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
-      const userID = urlParams.get('userID');
+      return urlParams.get(param);
+    }
 
+    const userID = getQueryParam('userID');
+
+    // Fonction pour récupérer et afficher les informations du coach
+    function getCoachProfile(userID) {
       if (userID) {
-        db.collection('users').doc(userID).collection('visitcard').doc('visitcarID')
-          .get()
-          .then((doc) => {
+        db.collection('users').doc(userID).collection('visitcard').doc('visitcarID').get()
+          .then(doc => {
             if (doc.exists) {
-              document.getElementById('firstName').innerText = doc.data().firstName || 'Non spécifié';
-              document.getElementById('lastName').innerText = doc.data().lastName || 'Non spécifié';
-              document.getElementById('color').innerText = doc.data().color || 'Non spécifié';
+              document.getElementById('firstName').innerText = doc.data().firstName || 'Prénom inconnu';
+              document.getElementById('lastName').innerText = doc.data().lastName || 'Nom inconnu';
+              document.getElementById('color').innerText = doc.data().color || 'Couleur non définie';
             } else {
-              document.getElementById('firstName').innerText = 'Non spécifié';
-              document.getElementById('lastName').innerText = 'Non spécifié';
-              document.getElementById('color').innerText = 'Non spécifié';
+              document.getElementById('firstName').innerText = 'Prénom inconnu';
+              document.getElementById('lastName').innerText = 'Nom inconnu';
+              document.getElementById('color').innerText = 'Couleur non définie';
             }
           })
-          .catch((error) => {
-            console.error("Erreur lors de la récupération des données: ", error);
+          .catch(error => {
+            console.error("Erreur lors de la récupération des données :", error);
           });
       } else {
-        document.getElementById('firstName').innerText = 'ID utilisateur non spécifié';
+        document.getElementById('firstName').innerText = 'Aucun ID utilisateur fourni';
         document.getElementById('lastName').innerText = '';
         document.getElementById('color').innerText = '';
       }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      getCoachProfile(userID);
+    });
   </script>
 </head>
-<body onload="fetchData()">
+<body>
   <h1>Profil du Coach</h1>
   <p>Prénom : <span id="firstName">Chargement...</span></p>
   <p>Nom : <span id="lastName">Chargement...</span></p>
