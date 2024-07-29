@@ -4,8 +4,17 @@
   <title>Profil du Coach</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
   <script>
-    // Configuration Firebase
+    // Configurer Firebase
     const firebaseConfig = {
       apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
       authDomain: "yourprogram-h00ehw.firebaseapp.com",
@@ -14,57 +23,35 @@
       messagingSenderId: "218168070365",
       appId: "1:218168070365:web:bc8ddef77acb34"
     };
+
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Fonction pour obtenir les données du coach
-    const getCoachData = async (userId) => {
-      try {
-        const docRef = db.collection('users').doc(userId).collection('visitcard').doc('visitcarID');
-        const doc = await docRef.get();
-        
-        if (doc.exists) {
-          const data = doc.data();
-          document.getElementById('firstName').innerText = data.firstName;
-          document.getElementById('lastName').innerText = data.lastName;
-          document.getElementById('color').innerText = data.color;
-        } else {
-          console.error('Aucun document trouvé.');
-          document.getElementById('firstName').innerText = 'Données non trouvées';
-          document.getElementById('lastName').innerText = 'Données non trouvées';
-          document.getElementById('color').innerText = 'Données non trouvées';
-        }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
-      }
-    };
-
-    // Récupération de l'ID utilisateur depuis l'URL
+    // Récupérer userID à partir de l'URL
     const userId = new URLSearchParams(window.location.search).get('userID');
-    if (userId) {
-      getCoachData(userId);
-    } else {
-      console.error('ID utilisateur non trouvé dans l\'URL.');
-    }
+    console.log('UserID:', userId);
+
+    db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        console.log('Document data:', data);
+        document.getElementById('firstName').innerText = data.firstName;
+        document.getElementById('lastName').innerText = data.lastName;
+        document.getElementById('color').innerText = data.color;
+      } else {
+        console.log('No such document!');
+        document.getElementById('firstName').innerText = 'Données non trouvées';
+        document.getElementById('lastName').innerText = 'Données non trouvées';
+        document.getElementById('color').innerText = 'Données non trouvées';
+      }
+    }).catch(error => {
+      console.error('Erreur lors de la récupération des données :', error);
+    });
   </script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      width: 80%;
-      margin: auto;
-      margin-top: 50px;
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Profil du Coach</h1>
+  <h1>Profil du Coach</h1>
+  <div class="card">
     <p>Prénom : <span id="firstName">Chargement...</span></p>
     <p>Nom : <span id="lastName">Chargement...</span></p>
     <p>Couleur préférée : <span id="color">Chargement...</span></p>
