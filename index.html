@@ -2,9 +2,12 @@
 <html>
 <head>
   <title>Profil du Coach</title>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
       authDomain: "yourprogram-h00ehw.firebaseapp.com",
@@ -13,44 +16,64 @@
       messagingSenderId: "218168070365",
       appId: "1:218168070365:web:bc8ddef77acb34"
     };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
 
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Get the user ID from the URL
     const userId = new URLSearchParams(window.location.search).get('userID');
-    console.log('User ID:', userId); // Log pour vérifier que l'ID de l'utilisateur est bien récupéré
+    console.log('User ID:', userId); // Log to verify that the user ID is retrieved
 
-    db.collection('users').doc(userId).get().then(doc => {
-      if (doc.exists) {
-        console.log('Document data:', doc.data()); // Log pour vérifier que les données du document sont récupérées
-        const coachData = doc.data();
-        document.getElementById('coachCode').innerText = coachData.coachCode || 'Pas de code coach';
-      } else {
-        console.log('No such document!'); // Log pour vérifier si le document existe
-        document.getElementById('coachCode').innerText = 'Données non trouvées';
-      }
-    }).catch(error => {
-      console.error('Erreur lors de la récupération des données :', error);
-      document.getElementById('coachCode').innerText = 'Erreur lors de la récupération des données';
-    });
+    // Function to fetch and display coach data
+    async function fetchCoachData() {
+      try {
+        const docRef = doc(db, 'users', userId);
+        const docSnap = await getDoc(docRef);
 
-    db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
-      if (doc.exists) {
-        console.log('Visitcard Document data:', doc.data()); // Log pour vérifier que les données du document visitcard sont récupérées
-        document.getElementById('firstName').innerText = doc.data().firstName;
-        document.getElementById('lastName').innerText = doc.data().lastName;
-        document.getElementById('color').innerText = doc.data().color;
-      } else {
-        console.log('No such visitcard document!'); // Log pour vérifier si le document visitcard existe
-        document.getElementById('firstName').innerText = 'Données non trouvées';
-        document.getElementById('lastName').innerText = 'Données non trouvées';
-        document.getElementById('color').innerText = 'Données non trouvées';
+        if (docSnap.exists()) {
+          console.log('Document data:', docSnap.data()); // Log to verify that the document data is retrieved
+          const coachData = docSnap.data();
+          document.getElementById('coachCode').innerText = coachData.coachCode || 'Pas de code coach';
+        } else {
+          console.log('No such document!'); // Log to verify if the document exists
+          document.getElementById('coachCode').innerText = 'Données non trouvées';
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+        document.getElementById('coachCode').innerText = 'Erreur lors de la récupération des données';
       }
-    }).catch(error => {
-      console.error('Erreur lors de la récupération des données :', error);
-      document.getElementById('firstName').innerText = 'Erreur lors de la récupération des données';
-      document.getElementById('lastName').innerText = 'Erreur lors de la récupération des données';
-      document.getElementById('color').innerText = 'Erreur lors de la récupération des données';
-    });
+    }
+
+    // Function to fetch and display visitcard data
+    async function fetchVisitcardData() {
+      try {
+        const docRef = doc(db, 'users', userId, 'visitcard', 'visitcarID');
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log('Visitcard Document data:', docSnap.data()); // Log to verify that the visitcard document data is retrieved
+          const visitcardData = docSnap.data();
+          document.getElementById('firstName').innerText = visitcardData.firstName;
+          document.getElementById('lastName').innerText = visitcardData.lastName;
+          document.getElementById('color').innerText = visitcardData.color;
+        } else {
+          console.log('No such visitcard document!'); // Log to verify if the visitcard document exists
+          document.getElementById('firstName').innerText = 'Données non trouvées';
+          document.getElementById('lastName').innerText = 'Données non trouvées';
+          document.getElementById('color').innerText = 'Données non trouvées';
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+        document.getElementById('firstName').innerText = 'Erreur lors de la récupération des données';
+        document.getElementById('lastName').innerText = 'Erreur lors de la récupération des données';
+        document.getElementById('color').innerText = 'Erreur lors de la récupération des données';
+      }
+    }
+
+    // Call the functions to fetch data
+    fetchCoachData();
+    fetchVisitcardData();
   </script>
   <style>
     body {
