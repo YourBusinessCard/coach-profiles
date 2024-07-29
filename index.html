@@ -41,8 +41,10 @@
       db.collection('users').doc(userId).get().then(doc => {
         if (doc.exists) {
           const coachData = doc.data();
+          console.log('Coach Data:', coachData); // Debugging line
           document.getElementById('coachCode').innerText = coachData.coachCode;
         } else {
+          console.error('No such document!');
           document.getElementById('coachCode').innerText = 'Données non trouvées';
         }
       }).catch(error => {
@@ -52,10 +54,12 @@
 
       db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
         if (doc.exists) {
+          console.log('Visit Card Data:', doc.data()); // Debugging line
           document.getElementById('firstName').innerText = doc.data().firstName;
           document.getElementById('lastName').innerText = doc.data().lastName;
           document.getElementById('color').innerText = doc.data().color;
         } else {
+          console.error('No such document in visitcard!');
           document.getElementById('firstName').innerText = 'Données non trouvées';
           document.getElementById('lastName').innerText = 'Données non trouvées';
           document.getElementById('color').innerText = 'Données non trouvées';
