@@ -1,44 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil du Coach</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
   <script>
-    const firebaseConfig = {
-      apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
-      authDomain: "yourprogram-h00ehw.firebaseapp.com",
-      projectId: "yourprogram-h00ehw",
-      storageBucket: "yourprogram-h00ehw.appspot.com",
-      messagingSenderId: "218168070365",
-      appId: "1:218168070365:web:bc8ddef77acb34"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    document.addEventListener('DOMContentLoaded', function () {
+      const firebaseConfig = {
+        apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
+        authDomain: "yourprogram-h00ehw.firebaseapp.com",
+        projectId: "yourprogram-h00ehw",
+        storageBucket: "yourprogram-h00ehw.appspot.com",
+        messagingSenderId: "218168070365",
+        appId: "1:218168070365:web:bc8ddef77acb34"
+      };
 
-    document.addEventListener('DOMContentLoaded', function() {
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
       const userId = new URLSearchParams(window.location.search).get('userID');
-      
-      // Récupérer le coachCode
+      console.log(`UserID: ${userId}`); // Debugging line
+
       db.collection('users').doc(userId).get().then(doc => {
         if (doc.exists) {
           const coachData = doc.data();
-          document.getElementById('coachCode').innerText = coachData.coachCode || 'Non défini';
+          document.getElementById('coachCode').innerText = coachData.coachCode;
         } else {
           document.getElementById('coachCode').innerText = 'Données non trouvées';
         }
       }).catch(error => {
         console.error('Erreur lors de la récupération des données :', error);
-        document.getElementById('coachCode').innerText = 'Erreur';
+        document.getElementById('coachCode').innerText = 'Erreur lors de la récupération des données';
       });
 
-      // Récupérer la carte de visite
       db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
         if (doc.exists) {
-          const visitcardData = doc.data();
-          document.getElementById('firstName').innerText = visitcardData.firstName || 'Non défini';
-          document.getElementById('lastName').innerText = visitcardData.lastName || 'Non défini';
-          document.getElementById('color').innerText = visitcardData.color || 'Non défini';
+          document.getElementById('firstName').innerText = doc.data().firstName;
+          document.getElementById('lastName').innerText = doc.data().lastName;
+          document.getElementById('color').innerText = doc.data().color;
         } else {
           document.getElementById('firstName').innerText = 'Données non trouvées';
           document.getElementById('lastName').innerText = 'Données non trouvées';
@@ -46,22 +62,20 @@
         }
       }).catch(error => {
         console.error('Erreur lors de la récupération des données :', error);
-        document.getElementById('firstName').innerText = 'Erreur';
-        document.getElementById('lastName').innerText = 'Erreur';
-        document.getElementById('color').innerText = 'Erreur';
+        document.getElementById('firstName').innerText = 'Erreur lors de la récupération des données';
+        document.getElementById('lastName').innerText = 'Erreur lors de la récupération des données';
+        document.getElementById('color').innerText = 'Erreur lors de la récupération des données';
       });
     });
   </script>
 </head>
 <body>
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0;">
-    <div style="background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-      <h1>Profil du Coach</h1>
-      <p>Coach Code : <span id="coachCode">Chargement...</span></p>
-      <p>Prénom : <span id="firstName">Chargement...</span></p>
-      <p>Nom : <span id="lastName">Chargement...</span></p>
-      <p>Couleur préférée : <span id="color">Chargement...</span></p>
-    </div>
+  <div class="container">
+    <h1>Profil du Coach</h1>
+    <p>Coach Code : <span id="coachCode">Chargement...</span></p>
+    <p>Prénom : <span id="firstName">Chargement...</span></p>
+    <p>Nom : <span id="lastName">Chargement...</span></p>
+    <p>Couleur préférée : <span id="color">Chargement...</span></p>
   </div>
 </body>
 </html>
