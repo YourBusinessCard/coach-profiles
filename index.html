@@ -1,29 +1,77 @@
-<script>
-  const firebaseConfig = {
-    apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
-    authDomain: "yourprogram-h00ehw.firebaseapp.com",
-    projectId: "yourprogram-h00ehw",
-    storageBucket: "yourprogram-h00ehw.appspot.com",
-    messagingSenderId: "218168070365",
-    appId: "1:218168070365:web:bc8ddef77acb34"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  const userId = new URLSearchParams(window.location.search).get('userID');
-  db.collection('users').doc(userId).collection('visitcard').doc('visitcarID').get().then(doc => {
-    if (doc.exists) {
-      document.getElementById('firstName').innerText = doc.data().firstName;
-      document.getElementById('lastName').innerText = doc.data().lastName;
-      document.getElementById('color').innerText = doc.data().color;
-      document.getElementById('coachCode').innerText = doc.data().coachCode;
-    } else {
-      document.getElementById('firstName').innerText = 'Données non trouvées';
-      document.getElementById('lastName').innerText = 'Données non trouvées';
-      document.getElementById('color').innerText = 'Données non trouvées';
-      document.getElementById('coachCode').innerText = 'Données non trouvées';
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profil du Coach</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
     }
-  }).catch(error => {
-    console.error('Erreur lors de la récupération des données :', error);
-  });
-</script>
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .card h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .card p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const firebaseConfig = {
+        apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
+        authDomain: "yourprogram-h00ehw.firebaseapp.com",
+        projectId: "yourprogram-h00ehw",
+        storageBucket: "yourprogram-h00ehw.appspot.com",
+        messagingSenderId: "218168070365",
+        appId: "1:218168070365:web:bc8ddef77acb34"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      const userId = new URLSearchParams(window.location.search).get('userID');
+      if (!userId) {
+        console.error('No userID provided in the URL');
+        return;
+      }
+      
+      const coachCardRef = db.collection('users').doc(userId).collection('visitcard').doc('visitcarID');
+      coachCardRef.get().then(doc => {
+        if (doc.exists) {
+          document.getElementById('firstName').innerText = doc.data().firstName;
+          document.getElementById('lastName').innerText = doc.data().lastName;
+          document.getElementById('color').innerText = doc.data().color;
+        } else {
+          document.getElementById('firstName').innerText = 'Données non trouvées';
+          document.getElementById('lastName').innerText = 'Données non trouvées';
+          document.getElementById('color').innerText = 'Données non trouvées';
+        }
+      }).catch(error => {
+        console.error('Erreur lors de la récupération des données :', error);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Profil du Coach</h1>
+      <p>Prénom : <span id="firstName">Chargement...</span></p>
+      <p>Nom : <span id="lastName">Chargement...</span></p>
+      <p>Couleur préférée : <span id="color">Chargement...</span></p>
+    </div>
+  </div>
+</body>
+</html>
