@@ -3,11 +3,9 @@
 <head>
   <title>Profil du Coach</title>
   <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AlzaSyC9iS5ydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
       authDomain: "yourprogram-h00ehw.firebaseapp.com",
@@ -17,62 +15,79 @@
       appId: "1:218168070365:web:bc8ddef77acb34"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Get the user ID from the URL
     const userId = new URLSearchParams(window.location.search).get('userID');
-    console.log('User ID:', userId); // Log to verify that the user ID is retrieved
 
-    // Function to fetch and display coach data
-    async function fetchCoachData() {
-      try {
-        const docRef = doc(db, 'users', userId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          console.log('Document data:', docSnap.data()); // Log to verify that the document data is retrieved
-          const coachData = docSnap.data();
-          document.getElementById('coachCode').innerText = coachData.coachCode || 'Pas de code coach';
-        } else {
-          console.log('No such document!'); // Log to verify if the document exists
-          document.getElementById('coachCode').innerText = 'Données non trouvées';
-        }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
-        document.getElementById('coachCode').innerText = 'Erreur lors de la récupération des données';
-      }
-    }
-
-    // Function to fetch and display visitcard data
     async function fetchVisitcardData() {
       try {
         const docRef = doc(db, 'users', userId, 'visitcard', 'visitcarID');
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          console.log('Visitcard Document data:', docSnap.data()); // Log to verify that the visitcard document data is retrieved
           const visitcardData = docSnap.data();
-          document.getElementById('firstName').innerText = visitcardData.firstName;
-          document.getElementById('lastName').innerText = visitcardData.lastName;
-          document.getElementById('color').innerText = visitcardData.color;
+          const selectedDesign = visitcardData.design || 'design1';
+
+          // Handle design1
+          if (selectedDesign === 'design1') {
+            renderDesign1(visitcardData);
+          }
+          // Handle design2
+          else if (selectedDesign === 'design2') {
+            renderDesign2(visitcardData);
+          }
+
         } else {
-          console.log('No such visitcard document!'); // Log to verify if the visitcard document exists
-          document.getElementById('firstName').innerText = 'Données non trouvées';
-          document.getElementById('lastName').innerText = 'Données non trouvées';
-          document.getElementById('color').innerText = 'Données non trouvées';
+          console.log('No such visitcard document!');
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
-        document.getElementById('firstName').innerText = 'Erreur lors de la récupération des données';
-        document.getElementById('lastName').innerText = 'Erreur lors de la récupération des données';
-        document.getElementById('color').innerText = 'Erreur lors de la récupération des données';
       }
     }
 
-    // Call the functions to fetch data
-    fetchCoachData();
+    function renderDesign1(data) {
+      const container = document.getElementById('visitCardContainer');
+      container.innerHTML = `
+        <div style="background-color: ${data.primaryColor || '#000'}; padding: 20px; border-radius: 16px;">
+          ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 20px;">` : ''}
+          <h2 style="color: white;">${data.firstName || ''} ${data.lastName ? data.lastName.toUpperCase() : ''}</h2>
+          <p style="color: white;">${data.description || ''}</p>
+          ${data.Phone ? `<p style="color: white;">Phone: ${data.Phone}</p>` : ''}
+          ${data['e-mail'] ? `<p style="color: white;">Email: ${data['e-mail']}</p>` : ''}
+          <div class="social-media-icons">
+            ${data.Facebook ? `<a href="${data.Facebook}" target="_blank" style="color: #3b5998; margin: 0 5px;">Facebook</a>` : ''}
+            ${data.Instagram ? `<a href="${data.Instagram}" target="_blank" style="color: #E1306C; margin: 0 5px;">Instagram</a>` : ''}
+            ${data.LinkedIn ? `<a href="${data.LinkedIn}" target="_blank" style="color: #0077B5; margin: 0 5px;">LinkedIn</a>` : ''}
+            ${data.Twitter ? `<a href="${data.Twitter}" target="_blank" style="color: #1DA1F2; margin: 0 5px;">Twitter</a>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDesign2(data) {
+      const container = document.getElementById('visitCardContainer');
+      container.innerHTML = `
+        <div style="background: linear-gradient(${data.primaryColor || '#000'}, ${data.secondaryColor || '#fff'}); padding: 20px; border-radius: 16px;">
+          <div style="display: flex; align-items: center;">
+            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Profile Image" style="width: 100px; height: 150px; border-radius: 8px; margin-right: 20px;">` : ''}
+            <div style="color: ${data.isTextWhite ? 'white' : 'black'};">
+              <h2>${data.firstName || ''} ${data.lastName || ''}</h2>
+              <p>${data.description || ''}</p>
+            </div>
+          </div>
+          <p style="color: ${data.isTextWhite ? 'white' : 'black'};">Phone: ${data.Phone || ''}</p>
+          <p style="color: ${data.isTextWhite ? 'white' : 'black'};">Email: ${data['e-mail'] || ''}</p>
+          <div class="social-media-icons">
+            ${data.Facebook ? `<a href="${data.Facebook}" target="_blank" style="color: #3b5998; margin: 0 5px;">Facebook</a>` : ''}
+            ${data.Instagram ? `<a href="${data.Instagram}" target="_blank" style="color: #E1306C; margin: 0 5px;">Instagram</a>` : ''}
+            ${data.LinkedIn ? `<a href="${data.LinkedIn}" target="_blank" style="color: #0077B5; margin: 0 5px;">LinkedIn</a>` : ''}
+            ${data.Twitter ? `<a href="${data.Twitter}" target="_blank" style="color: #1DA1F2; margin: 0 5px;">Twitter</a>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
     fetchVisitcardData();
   </script>
   <style>
@@ -84,21 +99,20 @@
       background-color: #f0f0f0;
       margin: 0;
     }
-    .container {
-      background: white;
+    .visit-card {
+      width: 350px;
       padding: 20px;
-      border-radius: 8px;
+      border-radius: 16px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .social-media-icons a {
+      font-size: 14px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Profil du Coach</h1>
-    <p>Coach Code : <span id="coachCode">Chargement...</span></p>
-    <p>Prénom : <span id="firstName">Chargement...</span></p>
-    <p>Nom : <span id="lastName">Chargement...</span></p>
-    <p>Couleur préférée : <span id="color">Chargement...</span></p>
-  </div>
+  <div id="visitCardContainer" class="visit-card"></div>
 </body>
 </html>
