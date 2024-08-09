@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil du Coach</title>
+    <title>Carte de Visite</title>
     <style>
-        /* Corps de la page */
         body {
             display: flex;
             justify-content: center;
@@ -16,183 +15,138 @@
             margin: 0;
         }
 
-        /* Conteneur principal */
         .container {
-            background-color: #517694; /* Couleur principale de fond */
+            background-color: #517694;
             padding: 20px;
             border-radius: 16px;
-            width: 400px; /* Augmentation de la largeur */
+            width: 400px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            color: white; /* Couleur du texte */
+            color: white;
             font-family: 'Poppins', sans-serif;
-            position: relative;
         }
 
-        /* Image de profil */
-        .container img {
+        .profile-picture {
             border-radius: 50%;
             width: 120px;
             height: 120px;
             margin-bottom: 16px;
-            object-fit: cover; /* S'assure que l'image reste dans le cadre circulaire */
-            background-color: #ffffff; /* Pour s'assurer que le fond de l'image est visible lors du chargement */
+            object-fit: cover;
+            background-color: #ffffff;
         }
 
-        /* Titre du nom */
-        .container h1 {
-            font-size: 24px;
-            margin: 0;
+        h1 {
+            margin: 10px 0;
+        }
+
+        .about {
             margin-bottom: 16px;
-        }
-
-        /* Sous-titre "About me" */
-        .about-me {
             font-weight: bold;
-            margin-bottom: 8px;
         }
 
-        /* Conteneur de description */
         .description {
-            text-align: left;
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px;
-            border-radius: 8px;
             border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px;
             margin-bottom: 16px;
         }
 
-        /* Informations de contact */
+        .contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
         .contact-info {
-            text-align: right;
-            margin-bottom: 16px;
-        }
-
-        .contact-info .info-item {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            margin-bottom: 8px;
+            color: white;
+            font-size: 14px;
         }
 
-        .contact-info .info-item span {
+        .contact-info i {
             margin-right: 8px;
         }
 
-        /* Icônes des réseaux sociaux */
         .social-media {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 10px;
             margin-bottom: 16px;
         }
 
         .social-media a {
-            color: #fff;
-            background-color: #fff;
-            border-radius: 50%;
-            padding: 8px;
-            font-size: 20px;
+            background-color: white;
+            color: #517694;
             width: 40px;
             height: 40px;
+            border-radius: 50%;
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: center;
-        }
-
-        /* Liens personnalisés */
-        .custom-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .custom-links a {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 16px;
-            color: white;
             text-decoration: none;
         }
 
-        /* Couleurs spécifiques pour les icônes */
-        .facebook-icon {
-            color: #3b5998 !important;
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .instagram-icon {
-            color: #E1306C !important;
+        .buttons button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
         }
 
-        .linkedin-icon {
-            color: #0077B5 !important;
-        }
-
-        .twitter-icon {
-            color: #1DA1F2 !important;
-        }
-
-        /* Ajustements pour les images et icônes */
-        img.profile-picture {
-            display: block;
-            margin: 0 auto;
-            border-radius: 50%;
-        }
-
-        i.phone-icon, i.email-icon {
-            color: #FF6347;
+        .buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
         }
     </style>
-    <!-- Lien vers FontAwesome pour les icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
     <div class="container">
-        <!-- Image de profil -->
-        <img class="profile-picture" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/yourprogram-h00ehw/assets/a2nhjsymzs02/DALL%C2%B7E_2024-07-29_18.11.32_-_A_close-up_avatar_of_a_middle-aged_man_with-dark_skin%2C_a_bald_head%2C_and_a_neatly_trimmed_beard%2C_wearing_a_suit_and_tie.webp" alt="Profile Picture">
-        
-        <!-- Nom -->
+        <!-- Ici, tu peux remplacer l'URL par le lien de ton image -->
+        <img class="profile-picture" src="https://via.placeholder.com/120" alt="Profile Picture">
         <h1>Jean Baptiste PARFAIT</h1>
-        
-        <!-- About Me -->
-        <div class="about-me">About me</div>
-        
-        <!-- Description -->
+        <div class="about">About me</div>
         <div class="description">
-            Coach sportif depuis 2 ans.
-            <br>Perte de poids
-            <br>Prise de masse
-            <br>Gain de muscle
+            Coach sportif depuis 2 ans.<br>
+            Perte de poids<br>
+            Prise de masse<br>
+            Gain de muscle
         </div>
-        
-        <!-- Informations de contact -->
-        <div class="contact-info">
-            <div class="info-item">
-                <span>07-61-30-58-28</span>
-                <i class="fas fa-phone phone-icon"></i>
+        <div class="contact">
+            <div class="contact-info">
+                <i class="fas fa-phone-alt"></i>
+                07-61-30-58-28
             </div>
-            <div class="info-item">
-                <span>IUIYgigigIFJYDi@fkfhg.com</span>
-                <i class="fas fa-envelope email-icon"></i>
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                IUIYgigigLFJYDi@fkfhg.com
             </div>
         </div>
-        
-        <!-- Réseaux sociaux -->
         <div class="social-media">
-            <a href="#" class="facebook-icon"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="instagram-icon"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="linkedin-icon"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="twitter-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
         </div>
-        
-        <!-- Liens personnalisés -->
-        <div class="custom-links">
-            <a href="#">Boutique</a>
-            <a href="#">Boutique 2</a>
+        <div class="buttons">
+            <button>Boutique</button>
+            <button>Boutique 2</button>
         </div>
     </div>
+
+    <!-- Font Awesome JS pour les icônes -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </body>
 
