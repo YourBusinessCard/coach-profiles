@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Profil du Coach</title>
+  <title>Coach Profile</title>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
@@ -29,17 +29,13 @@
           const visitcardData = docSnap.data();
           const selectedDesign = visitcardData.design || 'design1';
 
-          // Handle design1
           if (selectedDesign === 'design1') {
             renderDesign1(visitcardData);
-          }
-          // Handle design2
-          else if (selectedDesign === 'design2') {
+          } else if (selectedDesign === 'design2') {
             renderDesign2(visitcardData);
           }
-
         } else {
-          console.log('No such visitcard document!');
+          console.log('No such document!');
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
@@ -49,17 +45,33 @@
     function renderDesign1(data) {
       const container = document.getElementById('visitCardContainer');
       container.innerHTML = `
-        <div style="background-color: ${data.primaryColor || '#000'}; padding: 20px; border-radius: 16px;">
+        <div style="background-color: ${data.primaryColor || '#000'}; padding: 16px; border-radius: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
           ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 20px;">` : ''}
-          <h2 style="color: white;">${data.firstName || ''} ${data.lastName ? data.lastName.toUpperCase() : ''}</h2>
-          <p style="color: white;">${data.description || ''}</p>
-          ${data.Phone ? `<p style="color: white;">Phone: ${data.Phone}</p>` : ''}
-          ${data['e-mail'] ? `<p style="color: white;">Email: ${data['e-mail']}</p>` : ''}
-          <div class="social-media-icons">
-            ${data.Facebook ? `<a href="${data.Facebook}" target="_blank" style="color: #3b5998; margin: 0 5px;">Facebook</a>` : ''}
-            ${data.Instagram ? `<a href="${data.Instagram}" target="_blank" style="color: #E1306C; margin: 0 5px;">Instagram</a>` : ''}
-            ${data.LinkedIn ? `<a href="${data.LinkedIn}" target="_blank" style="color: #0077B5; margin: 0 5px;">LinkedIn</a>` : ''}
-            ${data.Twitter ? `<a href="${data.Twitter}" target="_blank" style="color: #1DA1F2; margin: 0 5px;">Twitter</a>` : ''}
+          <h2 style="color: white; text-align: center;">${data.firstName || ''} ${data.lastName ? data.lastName.toUpperCase() : ''}</h2>
+          <div style="border: 2px solid white; border-radius: 8px; padding: 16px; color: white; margin-top: 20px;">
+            <p style="text-align: center;">${data.description || ''}</p>
+          </div>
+          <div style="margin-top: 20px;">
+            ${data.Phone ? `
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 16px;">
+                <span style="color: white; font-size: 14px; letter-spacing: 1px;">${data.Phone}</span>
+              </div>` : ''}
+            ${data['e-mail'] ? `
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <span style="color: white; font-size: 14px;">${data['e-mail']}</span>
+              </div>` : ''}
+          </div>
+          <div style="margin-top: 16px; display: flex; justify-content: center;">
+            ${data.Facebook ? `<a href="${data.Facebook}" target="_blank" style="margin: 0 8px;"><img src="facebook-icon-url" alt="Facebook Icon" style="width: 20px; height: 20px;"></a>` : ''}
+            ${data.Instagram ? `<a href="${data.Instagram}" target="_blank" style="margin: 0 8px;"><img src="instagram-icon-url" alt="Instagram Icon" style="width: 20px; height: 20px;"></a>` : ''}
+            ${data.LinkedIn ? `<a href="${data.LinkedIn}" target="_blank" style="margin: 0 8px;"><img src="linkedin-icon-url" alt="LinkedIn Icon" style="width: 20px; height: 20px;"></a>` : ''}
+            ${data.Twitter ? `<a href="${data.Twitter}" target="_blank" style="margin: 0 8px;"><img src="twitter-icon-url" alt="Twitter Icon" style="width: 20px; height: 20px;"></a>` : ''}
+          </div>
+          <div style="margin-top: 20px; display: flex; justify-content: center;">
+            ${data.customLinks ? data.customLinks.map(link => `
+              <div style="background-color: rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 8px 12px; margin: 0 8px;">
+                <span style="color: white;">${link.title}</span>
+              </div>`).join('') : ''}
           </div>
         </div>
       `;
@@ -68,21 +80,29 @@
     function renderDesign2(data) {
       const container = document.getElementById('visitCardContainer');
       container.innerHTML = `
-        <div style="background: linear-gradient(${data.primaryColor || '#000'}, ${data.secondaryColor || '#fff'}); padding: 20px; border-radius: 16px;">
-          <div style="display: flex; align-items: center;">
-            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Profile Image" style="width: 100px; height: 150px; border-radius: 8px; margin-right: 20px;">` : ''}
-            <div style="color: ${data.isTextWhite ? 'white' : 'black'};">
-              <h2>${data.firstName || ''} ${data.lastName || ''}</h2>
-              <p>${data.description || ''}</p>
+        <div style="background: linear-gradient(${data.primaryColor}, ${data.secondaryColor}); padding: 16px; border-radius: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+          <div style="display: flex;">
+            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Profile Image" style="width: 100px; height: 150px; border-radius: 8px; margin-right: 16px;">` : ''}
+            <div style="flex-grow: 1;">
+              <div style="background-color: ${data.containerBackgroundColor}; padding: 8px; border-radius: 8px; color: ${data.isTextWhite ? 'black' : 'white'};">
+                <h2>${data.firstName || ''} ${data.lastName ? data.lastName.toUpperCase() : ''}</h2>
+              </div>
+              <div style="margin-top: 8px;">
+                ${data.customLinks ? data.customLinks.map(link => `
+                  <div style="color: ${data.isTextWhite ? 'black' : 'white'};">
+                    <span>${link.title}</span>
+                  </div>`).join('') : ''}
+              </div>
             </div>
           </div>
-          <p style="color: ${data.isTextWhite ? 'white' : 'black'};">Phone: ${data.Phone || ''}</p>
-          <p style="color: ${data.isTextWhite ? 'white' : 'black'};">Email: ${data['e-mail'] || ''}</p>
-          <div class="social-media-icons">
-            ${data.Facebook ? `<a href="${data.Facebook}" target="_blank" style="color: #3b5998; margin: 0 5px;">Facebook</a>` : ''}
-            ${data.Instagram ? `<a href="${data.Instagram}" target="_blank" style="color: #E1306C; margin: 0 5px;">Instagram</a>` : ''}
-            ${data.LinkedIn ? `<a href="${data.LinkedIn}" target="_blank" style="color: #0077B5; margin: 0 5px;">LinkedIn</a>` : ''}
-            ${data.Twitter ? `<a href="${data.Twitter}" target="_blank" style="color: #1DA1F2; margin: 0 5px;">Twitter</a>` : ''}
+          <div style="margin-top: 16px; background-color: ${data.containerBackgroundColor}; padding: 8px; border-radius: 8px; color: ${data.isTextWhite ? 'black' : 'white'};">
+            <p>${data.description || ''}</p>
+          </div>
+          <div style="margin-top: 16px; display: flex; justify-content: center;">
+            ${data.Facebook ? `<a href="${data.Facebook}" target="_blank" style="margin: 0 8px;"><img src="facebook-icon-url" alt="Facebook Icon" style="width: 20px; height: 20px;"></a>` : ''}
+            ${data.Instagram ? `<a href="${data.Instagram}" target="_blank" style="margin: 0 8px;"><img src="instagram-icon-url" alt="Instagram Icon" style="width: 20px; height: 20px;"></a>` : ''}
+            ${data.LinkedIn ? `<a href="${data.LinkedIn}" target="_blank" style="margin: 0 8px;"><img src="linkedin-icon-url" alt="LinkedIn Icon" style="width: 20px; height: 20px;"></a>` : ''}
+            ${data.Twitter ? `<a href="${data.Twitter}" target="_blank" style="margin: 0 8px;"><img src="twitter-icon-url" alt="Twitter Icon" style="width: 20px; height: 20px;"></a>` : ''}
           </div>
         </div>
       `;
@@ -105,10 +125,6 @@
       border-radius: 16px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       text-align: center;
-    }
-    .social-media-icons a {
-      font-size: 14px;
-      text-decoration: none;
     }
   </style>
 </head>
