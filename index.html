@@ -1,161 +1,202 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profil du Coach</title>
-  <style>
-    /* Corps de la page */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil du Coach</title>
+    <style>
+        /* Corps de la page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
 
-    /* Conteneur principal */
-    .container {
-      background-color: #517694; /* Couleur principale de fond */
-      padding: 20px;
-      border-radius: 16px;
-      width: 350px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      color: white; /* Couleur du texte */
-      font-family: 'Poppins', sans-serif;
-    }
+        /* Conteneur principal */
+        .container {
+            background-color: #517694; /* Couleur principale de fond */
+            padding: 20px;
+            border-radius: 16px;
+            width: 350px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: white; /* Couleur du texte */
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
 
-    /* Image de profil */
-    .container img {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      margin-bottom: 16px;
-    }
+        /* Image de profil */
+        .container img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 16px;
+        }
 
-    /* Titre du nom */
-    .container h1 {
-      font-size: 24px;
-      margin: 0;
-      margin-bottom: 16px;
-    }
+        /* Titre du nom */
+        .container h1 {
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 16px;
+        }
 
-    /* Sous-titre "About me" */
-    .about-me {
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+        /* Sous-titre "About me" */
+        .about-me {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
 
-    /* Conteneur de description */
-    .description {
-      text-align: left;
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 8px;
-      border-radius: 8px;
-      border: 2px solid white;
-      margin-bottom: 16px;
-    }
+        /* Conteneur de description */
+        .description {
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid white;
+            margin-bottom: 16px;
+        }
 
-    /* Informations de contact */
-    .contact-info {
-      text-align: right;
-      margin-bottom: 16px;
-    }
+        /* Informations de contact */
+        .contact-info {
+            text-align: right;
+            margin-bottom: 16px;
+        }
 
-    .contact-info .info-item {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 8px;
-    }
+        .contact-info .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 8px;
+        }
 
-    .contact-info .info-item span {
-      margin-right: 8px;
-    }
+        .contact-info .info-item span {
+            margin-right: 8px;
+        }
 
-    /* Icônes des réseaux sociaux */
-    .social-media {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
+        /* Icônes des réseaux sociaux */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
 
-    .social-media a {
-      color: #fff;
-      background-color: #fff;
-      border-radius: 50%;
-      padding: 10px;
-      font-size: 20px;
-      display: inline-block;
-    }
+        .social-media a {
+            color: #fff;
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 10px;
+            font-size: 20px;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    /* Liens personnalisés */
-    .custom-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-    }
+        .social-media a i {
+            font-size: 20px;
+        }
 
-    .custom-links a {
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 8px 16px;
-      border-radius: 16px;
-      color: white;
-      text-decoration: none;
-    }
-  </style>
-  <!-- Lien vers FontAwesome pour les icônes -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        /* Liens personnalisés */
+        .custom-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .custom-links a {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 16px;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Couleurs spécifiques pour les icônes */
+        .facebook-icon {
+            color: #3b5998 !important;
+        }
+
+        .instagram-icon {
+            color: #E1306C !important;
+        }
+
+        .linkedin-icon {
+            color: #0077B5 !important;
+        }
+
+        .twitter-icon {
+            color: #1DA1F2 !important;
+        }
+
+        /* Ajustements pour les images et icônes */
+        img.profile-picture {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
+
+        i.phone-icon, i.email-icon {
+            color: #FF6347;
+        }
+    </style>
+    <!-- Lien vers FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
 
-  <div class="container">
-    <!-- Image de profil -->
-    <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/yourprogram-h00ehw/assets/a2nhjsymzs02/DALL%C2%B7E_2024-07-29_18.11.32_-_A_close-up_avatar_of_a_middle-aged_man_with-dark_skin%2C_a_bald_head%2C_and_a_neatly_trimmed_beard%2C_wearing_a_suit_and_tie.webp" alt="Profile Picture">
-    
-    <!-- Nom -->
-    <h1>Jean Baptiste PARFAIT</h1>
-    
-    <!-- About Me -->
-    <div class="about-me">About me</div>
-    
-    <!-- Description -->
-    <div class="description">
-      Coach sportif depuis 2 ans.
-      <br>Perte de poids
-      <br>Prise de masse
-      <br>Gain de muscle
+    <div class="container">
+        <!-- Image de profil -->
+        <img class="profile-picture" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/yourprogram-h00ehw/assets/a2nhjsymzs02/DALL%C2%B7E_2024-07-29_18.11.32_-_A_close-up_avatar_of_a_middle-aged_man_with-dark_skin%2C_a_bald_head%2C_and_a_neatly_trimmed_beard%2C_wearing_a_suit_and_tie.webp" alt="Profile Picture">
+        
+        <!-- Nom -->
+        <h1>Jean Baptiste PARFAIT</h1>
+        
+        <!-- About Me -->
+        <div class="about-me">About me</div>
+        
+        <!-- Description -->
+        <div class="description">
+            Coach sportif depuis 2 ans.
+            <br>Perte de poids
+            <br>Prise de masse
+            <br>Gain de muscle
+        </div>
+        
+        <!-- Informations de contact -->
+        <div class="contact-info">
+            <div class="info-item">
+                <span>07-61-30-58-28</span>
+                <i class="fas fa-phone phone-icon"></i>
+            </div>
+            <div class="info-item">
+                <span>IUIYgigigIFJYDi@fkfhg.com</span>
+                <i class="fas fa-envelope email-icon"></i>
+            </div>
+        </div>
+        
+        <!-- Réseaux sociaux -->
+        <div class="social-media">
+            <a href="#" class="facebook-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="instagram-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="linkedin-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="twitter-icon"><i class="fab fa-twitter"></i></a>
+        </div>
+        
+        <!-- Liens personnalisés -->
+        <div class="custom-links">
+            <a href="#">Boutique</a>
+            <a href="#">Boutique 2</a>
+        </div>
     </div>
-    
-    <!-- Informations de contact -->
-    <div class="contact-info">
-      <div class="info-item">
-        <span>07-61-30-58-28</span>
-        <i class="fas fa-phone" style="color: #FF6347;"></i>
-      </div>
-      <div class="info-item">
-        <span>IUIYgigigIFJYDi@fkfhg.com</span>
-        <i class="fas fa-envelope" style="color: #FF6347;"></i>
-      </div>
-    </div>
-    
-    <!-- Réseaux sociaux -->
-    <div class="social-media">
-      <a href="#"><i class="fab fa-facebook-f" style="color: #3b5998;"></i></a>
-      <a href="#"><i class="fab fa-instagram" style="color: #E1306C;"></i></a>
-      <a href="#"><i class="fab fa-linkedin-in" style="color: #0077B5;"></i></a>
-      <a href="#"><i class="fab fa-twitter" style="color: #1DA1F2;"></i></a>
-    </div>
-    
-    <!-- Liens personnalisés -->
-    <div class="custom-links">
-      <a href="#">Boutique</a>
-      <a href="#">Boutique 2</a>
-    </div>
-  </div>
 
 </body>
+
 </html>
