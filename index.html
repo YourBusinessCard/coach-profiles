@@ -198,7 +198,8 @@
                     var data = doc.data();
 
                     if (data.imageUrl) {
-                        storage.refFromURL(data.imageUrl).getDownloadURL().then(function(url) {
+                        var imageRef = storage.refFromURL(data.imageUrl);
+                        imageRef.getDownloadURL().then(function(url) {
                             document.getElementById("profilePicture").src = url;
                         }).catch(function(error) {
                             console.log("Error getting download URL:", error);
