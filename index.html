@@ -23,7 +23,7 @@
             width: 400px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            color: white;
+            color: var(--secondaryColor, white);
             position: relative;
             overflow: hidden;
         }
@@ -46,32 +46,29 @@
             margin-bottom: 16px;
             object-fit: cover;
             background-color: #ffffff;
-            border: 2px solid white;
+            border: 2px solid var(--secondaryColor, white);
         }
 
         h1 {
             margin: 10px 0;
             font-size: 22px;
             text-transform: uppercase;
-            color: var(--secondaryColor, white);
         }
 
         .about {
             margin-bottom: 16px;
             font-weight: bold;
             font-size: 18px;
-            color: var(--secondaryColor, white);
         }
 
         .description {
-            border: 2px solid white;
+            border: 2px solid var(--secondaryColor, white);
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 16px;
             text-align: left;
             font-size: 16px;
             background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
-            color: var(--secondaryColor, white);
         }
 
         .contact {
