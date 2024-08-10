@@ -222,9 +222,19 @@
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
 
+                    console.log("Primary Color:", data.primaryColor);
+                    console.log("Secondary Color:", data.secondaryColor);
+                    console.log("Container Background Color:", data.containerBackgroundColor);
+
                     document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
                     document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
                     document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+
+                    // Force refresh the style
+                    document.documentElement.classList.add('update');
+                    setTimeout(() => {
+                        document.documentElement.classList.remove('update');
+                    }, 50);
 
                 } else {
                     console.log("No such document!");
