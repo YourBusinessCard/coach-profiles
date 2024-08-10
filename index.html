@@ -120,11 +120,10 @@
 <body>
 
     <div class="container">
-        <!-- URL de l'image que tu souhaites utiliser -->
-        <img class="profile-picture" src="https://via.placeholder.com/120" alt="Profile Picture">
-        <h1>Jean Baptiste PARFAIT</h1>
+        <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
+        <h1 id="name">Jean Baptiste PARFAIT</h1>
         <div class="about">About me</div>
-        <div class="description">
+        <div class="description" id="description">
             Coach sportif depuis 2 ans.<br>
             Perte de poids<br>
             Prise de masse<br>
@@ -133,18 +132,18 @@
         <div class="contact">
             <div class="contact-info">
                 <i class="fas fa-phone-alt"></i>
-                07-61-30-58-28
+                <span id="phone">07-61-30-58-28</span>
             </div>
             <div class="contact-info">
                 <i class="fas fa-envelope"></i>
-                IUIYgigigLFJYDi@fkfhg.com
+                <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
             </div>
         </div>
         <div class="social-media">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#" id="facebookLink"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
+            <a href="#" id="linkedinLink"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
         </div>
         <div class="buttons">
             <button>Boutique</button>
@@ -154,6 +153,57 @@
 
     <!-- Font Awesome JS pour les icônes -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+    <script>
+        // Configuration Firebase de ton projet
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialisation de Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        var db = firebase.firestore();
+
+        // Remplace USER_ID par l'ID de l'utilisateur ou du document que tu veux récupérer
+        var userId = "USER_ID";
+
+        db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+            .get()
+            .then((doc) => {
+                if (doc.exists) {
+                    var data = doc.data();
+                    
+                    // Mettre à jour les éléments du DOM
+                    document.getElementById("profilePicture").src = data.imageUrl || "default-profile.png";
+                    document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
+                    document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
+                    document.getElementById("phone").textContent = data.Phone;
+                    document.getElementById("email").textContent = data.email;
+
+                    // Mettre à jour les liens des réseaux sociaux
+                    document.getElementById("facebookLink").href = data.Facebook || "#";
+                    document.getElementById("instagramLink").href = data.Instagram || "#";
+                    document.getElementById("linkedinLink").href = data.LinkedIn || "#";
+                    document.getElementById("twitterLink").href = data.Twitter || "#";
+                } else {
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+    </script>
 
 </body>
 
