@@ -17,6 +17,7 @@
         }
 
         .container {
+            background-color: var(--primaryColor, #517694);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -25,6 +26,17 @@
             color: white;
             position: relative;
             overflow: hidden;
+        }
+
+        .texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('texture.png');
+            opacity: 0.1;
+            pointer-events: none;
         }
 
         .profile-picture {
@@ -41,12 +53,14 @@
             margin: 10px 0;
             font-size: 22px;
             text-transform: uppercase;
+            color: var(--secondaryColor, white);
         }
 
         .about {
             margin-bottom: 16px;
             font-weight: bold;
             font-size: 18px;
+            color: var(--secondaryColor, white);
         }
 
         .description {
@@ -56,6 +70,8 @@
             margin-bottom: 16px;
             text-align: left;
             font-size: 16px;
+            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
+            color: var(--secondaryColor, white);
         }
 
         .contact {
@@ -69,7 +85,7 @@
         .contact-info {
             display: flex;
             align-items: center;
-            color: white;
+            color: var(--secondaryColor, white);
             background-color: rgba(255, 255, 255, 0.2);
             padding: 10px 20px;
             border-radius: 30px;
@@ -87,8 +103,8 @@
         }
 
         .social-media a {
-            background-color: white;
-            color: inherit;
+            background-color: var(--secondaryColor, white);
+            color: var(--primaryColor, #517694);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -110,7 +126,7 @@
             border-radius: 8px;
             border: none;
             background-color: rgba(255, 255, 255, 0.2);
-            color: white;
+            color: var(--secondaryColor, white);
             font-size: 14px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -125,22 +141,23 @@
 
 <body>
 
-    <div class="container" id="container" style="background-color: #5c9d69bb;">
+    <div class="container">
+        <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name">Jean Baptiste PARFAIT</h1>
         <div class="about">About me</div>
-        <div class="description" id="description" style="background-color: #ff607d8b;">
+        <div class="description" id="description">
             Coach sportif depuis 2 ans.<br>
             Perte de poids<br>
             Prise de masse<br>
             Gain de muscle
         </div>
         <div class="contact">
-            <div class="contact-info" style="background-color: #ffa15770;">
+            <div class="contact-info">
                 <span id="phone">07-61-30-58-28</span>
                 <i class="fas fa-phone-alt"></i>
             </div>
-            <div class="contact-info" style="background-color: #ffa15770;">
+            <div class="contact-info">
                 <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
                 <i class="fas fa-envelope"></i>
             </div>
@@ -184,7 +201,6 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    // Profile Picture
                     if (data.imageUrl) {
                         var imageRef = storage.refFromURL(data.imageUrl);
                         imageRef.getDownloadURL().then(function(url) {
@@ -196,22 +212,20 @@
                         document.getElementById("profilePicture").src = "default-profile.png";
                     }
 
-                    // Colors
-                    document.getElementById("container").style.backgroundColor = data.primaryColor || "#5c9d69bb";
-                    document.querySelectorAll('.contact-info').forEach((el) => el.style.backgroundColor = data.secondaryColor || "#ffa15770");
-                    document.getElementById("description").style.backgroundColor = data.containerBackgroundColor || "#ff607d8b";
-
-                    // Texts
                     document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
                     document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
                     document.getElementById("phone").textContent = data.Phone;
                     document.getElementById("email").textContent = data.email;
 
-                    // Social Media Links
                     document.getElementById("facebookLink").href = data.Facebook || "#";
                     document.getElementById("instagramLink").href = data.Instagram || "#";
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
+
+                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
+                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
+                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+
                 } else {
                     console.log("No such document!");
                 }
