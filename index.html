@@ -13,6 +13,7 @@
             height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
         .container {
@@ -23,7 +24,19 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             text-align: center;
             color: white;
-            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('texture.png');
+            opacity: 0.1;
+            pointer-events: none;
         }
 
         .profile-picture {
@@ -69,10 +82,13 @@
             display: flex;
             align-items: center;
             color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
         }
 
         .contact-info i {
-            margin-right: 8px;
+            margin-left: 8px;
         }
 
         .social-media {
@@ -116,11 +132,13 @@
             background-color: rgba(255, 255, 255, 0.4);
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
 
     <div class="container">
+        <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name">Jean Baptiste PARFAIT</h1>
         <div class="about">About me</div>
@@ -132,12 +150,12 @@
         </div>
         <div class="contact">
             <div class="contact-info">
-                <i class="fas fa-phone-alt"></i>
                 <span id="phone">07-61-30-58-28</span>
+                <i class="fas fa-phone-alt"></i>
             </div>
             <div class="contact-info">
-                <i class="fas fa-envelope"></i>
                 <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
+                <i class="fas fa-envelope"></i>
             </div>
         </div>
         <div class="social-media">
@@ -152,17 +170,10 @@
         </div>
     </div>
 
-    <!-- Font Awesome JS pour les icônes -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-
-    <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
     <script>
-        // Configuration Firebase de ton projet
         var firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -172,12 +183,10 @@
             appId: "YOUR_APP_ID"
         };
 
-        // Initialisation de Firebase
         firebase.initializeApp(firebaseConfig);
 
         var db = firebase.firestore();
 
-        // Remplace USER_ID par l'ID de l'utilisateur ou du document que tu veux récupérer
         var userId = "USER_ID";
 
         db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
@@ -185,15 +194,13 @@
             .then((doc) => {
                 if (doc.exists) {
                     var data = doc.data();
-                    
-                    // Mettre à jour les éléments du DOM
+
                     document.getElementById("profilePicture").src = data.imageUrl || "default-profile.png";
                     document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
                     document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
                     document.getElementById("phone").textContent = data.Phone;
                     document.getElementById("email").textContent = data.email;
 
-                    // Mettre à jour les liens des réseaux sociaux
                     document.getElementById("facebookLink").href = data.Facebook || "#";
                     document.getElementById("instagramLink").href = data.Instagram || "#";
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
