@@ -17,7 +17,6 @@
         }
 
         .container {
-            background-color: #92a8d1; /* Mise à jour de la couleur de fond */
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -26,17 +25,6 @@
             color: white;
             position: relative;
             overflow: hidden;
-        }
-
-        .texture {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('texture.png');
-            opacity: 0.1;
-            pointer-events: none;
         }
 
         .profile-picture {
@@ -53,7 +41,6 @@
             margin: 10px 0;
             font-size: 22px;
             text-transform: uppercase;
-            color: #f8b7cd; /* Mise à jour de la couleur du texte */
         }
 
         .about {
@@ -69,7 +56,6 @@
             margin-bottom: 16px;
             text-align: left;
             font-size: 16px;
-            background-color: #f8e7f3; /* Mise à jour de la couleur de fond */
         }
 
         .contact {
@@ -102,7 +88,7 @@
 
         .social-media a {
             background-color: white;
-            color: #517694;
+            color: inherit;
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -139,23 +125,22 @@
 
 <body>
 
-    <div class="container">
-        <div class="texture"></div>
+    <div class="container" id="container" style="background-color: #5c9d69bb;">
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name">Jean Baptiste PARFAIT</h1>
         <div class="about">About me</div>
-        <div class="description" id="description">
+        <div class="description" id="description" style="background-color: #ff607d8b;">
             Coach sportif depuis 2 ans.<br>
             Perte de poids<br>
             Prise de masse<br>
             Gain de muscle
         </div>
         <div class="contact">
-            <div class="contact-info">
+            <div class="contact-info" style="background-color: #ffa15770;">
                 <span id="phone">07-61-30-58-28</span>
                 <i class="fas fa-phone-alt"></i>
             </div>
-            <div class="contact-info">
+            <div class="contact-info" style="background-color: #ffa15770;">
                 <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
                 <i class="fas fa-envelope"></i>
             </div>
@@ -199,6 +184,7 @@
                 if (doc.exists) {
                     var data = doc.data();
 
+                    // Profile Picture
                     if (data.imageUrl) {
                         var imageRef = storage.refFromURL(data.imageUrl);
                         imageRef.getDownloadURL().then(function(url) {
@@ -210,11 +196,18 @@
                         document.getElementById("profilePicture").src = "default-profile.png";
                     }
 
+                    // Colors
+                    document.getElementById("container").style.backgroundColor = data.primaryColor || "#5c9d69bb";
+                    document.querySelectorAll('.contact-info').forEach((el) => el.style.backgroundColor = data.secondaryColor || "#ffa15770");
+                    document.getElementById("description").style.backgroundColor = data.containerBackgroundColor || "#ff607d8b";
+
+                    // Texts
                     document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
                     document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
                     document.getElementById("phone").textContent = data.Phone;
                     document.getElementById("email").textContent = data.email;
 
+                    // Social Media Links
                     document.getElementById("facebookLink").href = data.Facebook || "#";
                     document.getElementById("instagramLink").href = data.Instagram || "#";
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
