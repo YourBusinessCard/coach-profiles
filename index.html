@@ -28,17 +28,6 @@
             overflow: hidden;
         }
 
-        .texture {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('texture.png');
-            opacity: 0.1;
-            pointer-events: none;
-        }
-
         .profile-picture {
             border-radius: 50%;
             width: 120px;
@@ -81,21 +70,14 @@
         .contact-info {
             display: flex;
             align-items: center;
-            justify-content: space-around;
             color: white;
             background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 12px;
+            padding: 10px 20px;
             border-radius: 30px;
-            width: 100%;
-            margin-bottom: 8px;
         }
 
         .contact-info i {
             margin-left: 8px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            padding: 4px;
-            color: #FF8C00; /* Couleur secondaire */
         }
 
         .social-media {
@@ -106,7 +88,7 @@
         }
 
         .social-media a {
-            background-color: #ffffff;
+            background-color: white;
             color: #517694;
             width: 40px;
             height: 40px;
@@ -145,15 +127,14 @@
 <body>
 
     <div class="container">
-        <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name">Jean Baptiste PARFAIT</h1>
         <div class="about">About me</div>
         <div class="description" id="description">
             Coach sportif depuis 2 ans.<br>
-            - Perte de poids<br>
-            - Prise de masse<br>
-            - Gain de muscle
+            Perte de poids<br>
+            Prise de masse<br>
+            Gain de muscle
         </div>
         <div class="contact">
             <div class="contact-info">
@@ -176,6 +157,9 @@
             <button>Boutique 2</button>
         </div>
     </div>
+
+    <input type="color" id="primaryColorPicker" value="#517694" style="display:none;">
+    <input type="color" id="secondaryColorPicker" value="#34c759" style="display:none;">
 
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
@@ -224,12 +208,45 @@
                     document.getElementById("instagramLink").href = data.Instagram || "#";
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
+
+                    // Appliquer les couleurs sélectionnées
+                    document.querySelector('.container').style.backgroundColor = data.primaryColor || '#517694';
+                    var socialMediaIcons = document.querySelectorAll('.social-media a');
+                    socialMediaIcons.forEach(function(icon) {
+                        icon.style.backgroundColor = data.secondaryColor || '#34c759';
+                    });
                 } else {
                     console.log("No such document!");
                 }
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
+
+        // Sélecteurs de couleurs
+        document.getElementById("primaryColorPicker").addEventListener("change", function(event) {
+            var selectedColor = event.target.value;
+            db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+                .update({
+                    primaryColor: selectedColor
+                })
+                .then(() => {
+                    document.querySelector('.container').style.backgroundColor = selectedColor;
+                });
+        });
+
+        document.getElementById("secondaryColorPicker").addEventListener("change", function(event) {
+            var selectedColor = event.target.value;
+            db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+                .update({
+                    secondaryColor: selectedColor
+                })
+                .then(() => {
+                    var socialMediaIcons = document.querySelectorAll('.social-media a');
+                    socialMediaIcons.forEach(function(icon) {
+                        icon.style.backgroundColor = selectedColor;
+                    });
+                });
+        });
     </script>
 
 </body>
