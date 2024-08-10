@@ -23,7 +23,7 @@
             width: 400px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            color: white;
+            color: var(--secondaryColor, white);
             position: relative;
             overflow: hidden;
         }
@@ -46,7 +46,7 @@
             margin-bottom: 16px;
             object-fit: cover;
             background-color: #ffffff;
-            border: 2px solid white;
+            border: 2px solid var(--secondaryColor, white);
         }
 
         h1 {
@@ -64,7 +64,7 @@
         }
 
         .description {
-            border: 2px solid white;
+            border: 2px solid var(--secondaryColor, white);
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 16px;
@@ -86,13 +86,14 @@
             display: flex;
             align-items: center;
             color: var(--secondaryColor, white);
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
             padding: 10px 20px;
             border-radius: 30px;
         }
 
         .contact-info i {
             margin-left: 8px;
+            color: var(--secondaryColor, white);
         }
 
         .social-media {
@@ -125,7 +126,7 @@
             padding: 10px 20px;
             border-radius: 8px;
             border: none;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
             color: var(--secondaryColor, white);
             font-size: 14px;
             cursor: pointer;
@@ -222,9 +223,9 @@
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
 
-                    // Mettre à jour les variables CSS avec les couleurs depuis la base de données
+                    // Set the colors from the database
                     document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
-                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || '#ffa157');
+                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
                     document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
 
                 } else {
