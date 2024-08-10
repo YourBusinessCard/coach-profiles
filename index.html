@@ -172,6 +172,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
     <script>
         var firebaseConfig = {
@@ -186,6 +187,7 @@
         firebase.initializeApp(firebaseConfig);
 
         var db = firebase.firestore();
+        var storage = firebase.storage();
 
         var userId = "USER_ID";
 
@@ -195,7 +197,16 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    document.getElementById("profilePicture").src = data.imageUrl || "default-profile.png";
+                    if (data.imageUrl) {
+                        storage.refFromURL(data.imageUrl).getDownloadURL().then(function(url) {
+                            document.getElementById("profilePicture").src = url;
+                        }).catch(function(error) {
+                            console.log("Error getting download URL:", error);
+                        });
+                    } else {
+                        document.getElementById("profilePicture").src = "default-profile.png";
+                    }
+
                     document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
                     document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
                     document.getElementById("phone").textContent = data.Phone;
