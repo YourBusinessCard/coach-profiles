@@ -201,6 +201,11 @@
                 if (doc.exists) {
                     var data = doc.data();
 
+                    // Vérification des couleurs récupérées
+                    console.log("Couleur primaire récupérée :", data.primaryColor);
+                    console.log("Couleur secondaire récupérée :", data.secondaryColor);
+                    console.log("Couleur du fond du container récupérée :", data.containerBackgroundColor);
+
                     // Assignation des couleurs aux variables CSS
                     document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#537f5d93');
                     document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
