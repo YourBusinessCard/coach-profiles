@@ -17,7 +17,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor);
+            background-color: var(--primaryColor); /* Application stricte de la couleur primaire récupérée */
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -104,7 +104,7 @@
 
         .social-media a {
             background-color: var(--secondaryColor, white);
-            color: var(--primaryColor, #517694);
+            color: var(--primaryColor);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -201,9 +201,10 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    console.log("Couleur primaire récupérée :", data.primaryColor);  // Debugging line
+                    // Vérification des couleurs récupérées
+                    console.log("Couleur primaire récupérée :", data.primaryColor);
 
-                    // Application de la couleur récupérée
+                    // Application stricte de la couleur récupérée
                     if (data.primaryColor) {
                         document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
                     } else {
@@ -211,23 +212,6 @@
                     }
 
                     // Autres assignations de données (nom, description, etc.)
-                    document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
-                    document.getElementById('description').innerText = data.description;
-                    document.getElementById('phone').innerText = data.Phone;
-                    document.getElementById('email').innerText = data['e-mail'];
-
-                    var socialMediaLinks = {
-                        'Facebook': data.Facebook,
-                        'Instagram': data.Instagram,
-                        'LinkedIn': data.LinkedIn,
-                        'Twitter': data.Twitter
-                    };
-
-                    for (var key in socialMediaLinks) {
-                        if (socialMediaLinks[key]) {
-                            document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
-                        }
-                    }
                 } else {
                     console.log("Le document n'existe pas !");
                 }
