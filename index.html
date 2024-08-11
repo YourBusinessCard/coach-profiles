@@ -1,233 +1,71 @@
-<!DOCTYPE html>
-<html lang="fr">
+<script>
+    var firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte de Visite</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-        }
+    firebase.initializeApp(firebaseConfig);
 
-        .container {
-            background-color: var(--primaryColor); /* Couleur primaire récupérée */
-            border-radius: 16px;
-            padding: 20px;
-            width: 400px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
+    var db = firebase.firestore();
+    var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2";
 
-        .profile-picture {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto;
-            display: block;
-            object-fit: cover;
-            background-color: #ffffff;
-            border: 2px solid white;
-        }
+    db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+        .get()
+        .then((doc) => {
+            if (doc.exists) {
+                var data = doc.data();
 
-        h1 {
-            margin: 16px 0;
-            font-size: 22px;
-            text-transform: uppercase;
-            color: white;
-            text-align: center;
-        }
+                // Vérification des couleurs récupérées
+                console.log("Couleur primaire récupérée :", data.primaryColor);
 
-        .about {
-            font-weight: bold;
-            font-size: 18px;
-            color: white;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .description {
-            border: 2px solid white;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 16px;
-            font-size: 16px;
-            color: white;
-            text-align: left;
-        }
-
-        .contact {
-            margin-bottom: 16px;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .contact-info span {
-            font-size: 16px;
-            letter-spacing: 2px;
-            color: white;
-            margin-right: 8px;
-        }
-
-        .contact-info .icon {
-            background-color: white;
-            color: var(--secondaryColor); /* Couleur secondaire */
-            border-radius: 50%;
-            padding: 8px;
-        }
-
-        .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .social-media a {
-            background-color: white;
-            color: var(--primaryColor); /* Couleur primaire */
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        .custom-links {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .custom-links div {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 16px;
-            font-size: 14px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-        <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
-        <h1 id="name">Jean Baptiste PARFAIT</h1>
-        <div class="about">About me</div>
-        <div class="description" id="description">
-            Coach sportif depuis 2 ans.<br>
-            Perte de poids<br>
-            Prise de masse<br>
-            Gain de muscle
-        </div>
-        <div class="contact">
-            <div class="contact-info">
-                <span id="phone">07-61-30-58-28</span>
-                <i class="fas fa-phone-alt icon"></i>
-            </div>
-            <div class="contact-info">
-                <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
-                <i class="fas fa-envelope icon"></i>
-            </div>
-        </div>
-        <div class="social-media">
-            <a href="#" id="facebookLink"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
-            <a href="#" id="linkedinLink"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
-        </div>
-        <div class="custom-links" id="customLinksContainer">
-            <!-- Custom Links will be inserted here -->
-        </div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
-    <script>
-        var firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-
-        var db = firebase.firestore();
-
-        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2";
-
-        db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
-            .get()
-            .then((doc) => {
-                if (doc.exists) {
-                    var data = doc.data();
-
-                    // Applique les couleurs
+                // Application de la couleur récupérée
+                if (data.primaryColor && /^#[0-9A-F]{6}$/i.test(data.primaryColor)) {
                     document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
-                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
-
-                    // Applique les autres données
-                    document.getElementById("profilePicture").src = data.imageUrl;
-                    document.getElementById("name").textContent = data.firstName + " " + data.lastName.toUpperCase();
-                    document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
-                    document.getElementById("phone").textContent = data.Phone;
-                    document.getElementById("email").textContent = data['e-mail'];
-
-                    // Liens des réseaux sociaux
-                    if (data.Facebook) {
-                        document.getElementById("facebookLink").href = data.Facebook;
-                    }
-                    if (data.Instagram) {
-                        document.getElementById("instagramLink").href = data.Instagram;
-                    }
-                    if (data.LinkedIn) {
-                        document.getElementById("linkedinLink").href = data.LinkedIn;
-                    }
-                    if (data.Twitter) {
-                        document.getElementById("twitterLink").href = data.Twitter;
-                    }
-
-                    // Liens personnalisés
-                    var customLinksContainer = document.getElementById("customLinksContainer");
-                    if (data.titleLink1) {
-                        var link1 = document.createElement("div");
-                        link1.textContent = data.titleLink1;
-                        customLinksContainer.appendChild(link1);
-                    }
-                    if (data.titleLink2) {
-                        var link2 = document.createElement("div");
-                        link2.textContent = data.titleLink2;
-                        customLinksContainer.appendChild(link2);
-                    }
                 } else {
-                    console.log("Le document n'existe pas !");
+                    console.log("Code couleur invalide ou non présent. Utilisation de la couleur par défaut.");
                 }
-            }).catch((error) => {
-                console.log("Erreur lors de la récupération du document :", error);
-            });
-    </script>
 
-</body>
+                // Application des autres données
+                document.getElementById("profilePicture").src = data.imageUrl;
+                document.getElementById("name").textContent = data.firstName + " " + data.lastName.toUpperCase();
+                document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
+                document.getElementById("phone").textContent = data.Phone;
+                document.getElementById("email").textContent = data['e-mail'];
 
-</html>
+                // Application des liens des réseaux sociaux
+                if (data.Facebook) {
+                    document.getElementById("facebookLink").href = data.Facebook;
+                }
+                if (data.Instagram) {
+                    document.getElementById("instagramLink").href = data.Instagram;
+                }
+                if (data.LinkedIn) {
+                    document.getElementById("linkedinLink").href = data.LinkedIn;
+                }
+                if (data.Twitter) {
+                    document.getElementById("twitterLink").href = data.Twitter;
+                }
+
+                // Application des liens personnalisés
+                var customLinksContainer = document.getElementById("customLinksContainer");
+                if (data.titleLink1) {
+                    var link1 = document.createElement("div");
+                    link1.textContent = data.titleLink1;
+                    customLinksContainer.appendChild(link1);
+                }
+                if (data.titleLink2) {
+                    var link2 = document.createElement("div");
+                    link2.textContent = data.titleLink2;
+                    customLinksContainer.appendChild(link2);
+                }
+            } else {
+                console.log("Le document n'existe pas !");
+            }
+        }).catch((error) => {
+            console.log("Erreur lors de la récupération du document :", error);
+        });
+</script>
