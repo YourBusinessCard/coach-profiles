@@ -17,7 +17,6 @@
         }
 
         .container {
-            background-color: var(--primaryColor);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -26,6 +25,7 @@
             color: white;
             position: relative;
             overflow: hidden;
+            background-color: #cccccc; /* Temporary default color */
         }
 
         .profile-picture {
@@ -130,7 +130,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container" id="visitCardContainer">
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name">Jean Baptiste PARFAIT</h1>
         <div class="about">About me</div>
@@ -194,7 +194,7 @@
 
                     // Application de la couleur récupérée
                     if (data.primaryColor) {
-                        document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
+                        document.getElementById("visitCardContainer").style.backgroundColor = data.primaryColor;
                     } else {
                         console.log("Aucune couleur primaire récupérée.");
                     }
