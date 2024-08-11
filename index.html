@@ -17,7 +17,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor, #537f5d93);
+            background-color: var(--primaryColor);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -201,7 +201,6 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    // Vérification des couleurs récupérées
                     console.log("Couleur primaire récupérée :", data.primaryColor);  // Debugging line
 
                     // Application de la couleur récupérée
