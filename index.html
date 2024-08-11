@@ -17,7 +17,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor, #517694); /* Applique la couleur primaire ici */
+            background-color: rgba(83, 127, 93, 0.57); /* Conversion de #537f5d93 */
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -222,7 +222,9 @@
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
 
-                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
+                    var primaryColor = data.primaryColor || '#517694';
+                    var rgbaColor = hexToRgba(primaryColor);
+                    document.documentElement.style.setProperty('--primaryColor', rgbaColor);
                     document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
                     document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
 
@@ -232,6 +234,18 @@
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
+
+        function hexToRgba(hex) {
+            const match = hex.match(/^#?(([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})?)$/);
+            if (!match) return hex; // Return the original color if no match
+
+            const r = parseInt(match[2], 16);
+            const g = parseInt(match[3], 16);
+            const b = parseInt(match[4], 16);
+            const a = match[5] ? parseInt(match[5], 16) / 255 : 1;
+
+            return `rgba(${r}, ${g}, ${b}, ${a})`;
+        }
     </script>
 
 </body>
