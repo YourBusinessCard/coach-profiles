@@ -193,7 +193,7 @@
         var db = firebase.firestore();
         var storage = firebase.storage();
 
-        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2"; // Utilise l'ID de l'utilisateur
+        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2"; // Remplace par l'ID de l'utilisateur
 
         db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
             .get()
@@ -203,31 +203,20 @@
 
                     // Vérification des couleurs récupérées
                     console.log("Couleur primaire récupérée :", data.primaryColor);
-                    console.log("Couleur secondaire récupérée :", data.secondaryColor);
-                    console.log("Couleur du fond du container récupérée :", data.containerBackgroundColor);
 
-                    // Assignation des couleurs aux variables CSS
-                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#537f5d93');
-                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
-                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+                    // Application de la couleur récupérée
+                    if (data.primaryColor) {
+                        document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
+                    } else {
+                        console.log("Aucune couleur primaire récupérée, application de la couleur par défaut.");
+                    }
 
-                    // Mise à jour des autres informations
-                    document.getElementById('profilePicture').src = data.imageUrl;
-                    document.getElementById('name').textContent = `${data.firstName} ${data.lastName}`;
-                    document.getElementById('description').textContent = data.description;
-                    document.getElementById('phone').textContent = data.Phone;
-                    document.getElementById('email').textContent = data['e-mail'];
-                    
-                    // Mise à jour des liens des réseaux sociaux
-                    document.getElementById('facebookLink').href = data.Facebook || '#';
-                    document.getElementById('instagramLink').href = data.Instagram || '#';
-                    document.getElementById('linkedinLink').href = data.LinkedIn || '#';
-                    document.getElementById('twitterLink').href = data.Twitter || '#';
+                    // Autres assignations de données (nom, description, etc.)
                 } else {
-                    console.log("No such document!");
+                    console.log("Le document n'existe pas !");
                 }
             }).catch((error) => {
-                console.log("Error getting document:", error);
+                console.log("Erreur lors de la récupération du document :", error);
             });
     </script>
 
