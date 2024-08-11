@@ -17,7 +17,7 @@
         }
 
         .container {
-            background-color: rgba(83, 127, 93, 0.57); /* Conversion de #537f5d93 */
+            background-color: var(--primaryColor, #517694);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -53,14 +53,14 @@
             margin: 10px 0;
             font-size: 22px;
             text-transform: uppercase;
-            color: var(--secondaryColor, white);
+            color: white;
         }
 
         .about {
             margin-bottom: 16px;
             font-weight: bold;
             font-size: 18px;
-            color: var(--secondaryColor, white);
+            color: white;
         }
 
         .description {
@@ -70,8 +70,8 @@
             margin-bottom: 16px;
             text-align: left;
             font-size: 16px;
-            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
-            color: var(--secondaryColor, white);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .contact {
@@ -85,7 +85,6 @@
         .contact-info {
             display: flex;
             align-items: center;
-            color: var(--secondaryColor, white);
             background-color: rgba(255, 255, 255, 0.2);
             padding: 10px 20px;
             border-radius: 30px;
@@ -93,6 +92,7 @@
 
         .contact-info i {
             margin-left: 8px;
+            color: var(--secondaryColor, white);
         }
 
         .social-media {
@@ -103,8 +103,8 @@
         }
 
         .social-media a {
-            background-color: var(--secondaryColor, white);
-            color: var(--primaryColor, #517694);
+            background-color: white;
+            color: var(--secondaryColor, #517694);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -126,7 +126,7 @@
             border-radius: 8px;
             border: none;
             background-color: rgba(255, 255, 255, 0.2);
-            color: var(--secondaryColor, white);
+            color: white;
             font-size: 14px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -222,30 +222,15 @@
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
 
-                    var primaryColor = data.primaryColor || '#517694';
-                    var rgbaColor = hexToRgba(primaryColor);
-                    document.documentElement.style.setProperty('--primaryColor', rgbaColor);
+                    // Appliquer les couleurs primaires et secondaires depuis la base de données
+                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
                     document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
-                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
-
                 } else {
                     console.log("No such document!");
                 }
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
-
-        function hexToRgba(hex) {
-            const match = hex.match(/^#?(([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})?)$/);
-            if (!match) return hex; // Return the original color if no match
-
-            const r = parseInt(match[2], 16);
-            const g = parseInt(match[3], 16);
-            const b = parseInt(match[4], 16);
-            const a = match[5] ? parseInt(match[5], 16) / 255 : 1;
-
-            return `rgba(${r}, ${g}, ${b}, ${a})`;
-        }
     </script>
 
 </body>
