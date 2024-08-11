@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor); /* Suppression de la valeur par défaut ici */
+            background-color: var(--primaryColor, #537f5d93);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -52,14 +53,14 @@
             margin: 10px 0;
             font-size: 22px;
             text-transform: uppercase;
-            color: var(--secondaryColor);
+            color: var(--secondaryColor, white);
         }
 
         .about {
             margin-bottom: 16px;
             font-weight: bold;
             font-size: 18px;
-            color: var(--secondaryColor);
+            color: var(--secondaryColor, white);
         }
 
         .description {
@@ -69,8 +70,8 @@
             margin-bottom: 16px;
             text-align: left;
             font-size: 16px;
-            background-color: var(--containerBackgroundColor);
-            color: var(--secondaryColor);
+            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
+            color: var(--secondaryColor, white);
         }
 
         .contact {
@@ -84,7 +85,7 @@
         .contact-info {
             display: flex;
             align-items: center;
-            color: var(--secondaryColor);
+            color: var(--secondaryColor, white);
             background-color: rgba(255, 255, 255, 0.2);
             padding: 10px 20px;
             border-radius: 30px;
@@ -102,8 +103,8 @@
         }
 
         .social-media a {
-            background-color: var(--secondaryColor);
-            color: var(--primaryColor);
+            background-color: var(--secondaryColor, white);
+            color: var(--primaryColor, #517694);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -125,7 +126,7 @@
             border-radius: 8px;
             border: none;
             background-color: rgba(255, 255, 255, 0.2);
-            color: var(--secondaryColor);
+            color: var(--secondaryColor, white);
             font-size: 14px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -137,7 +138,9 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
+
     <div class="container">
         <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
@@ -190,24 +193,30 @@
         var db = firebase.firestore();
         var storage = firebase.storage();
 
-        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2";
+        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2"; // Remplace par l'ID de l'utilisateur
 
         db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
             .get()
             .then((doc) => {
                 if (doc.exists) {
                     var data = doc.data();
+
+                    // Vérification des couleurs récupérées
+                    console.log("Couleur primaire récupérée :", data.primaryColor);  // Debugging line
+
+                    // Application de la couleur récupérée
                     if (data.primaryColor) {
                         document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
+                    } else {
+                        console.log("Aucune couleur primaire récupérée, application de la couleur par défaut.");
                     }
 
-                    // Application des autres informations ici
+                    // Autres assignations de données (nom, description, etc.)
                     document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
                     document.getElementById('description').innerText = data.description;
                     document.getElementById('phone').innerText = data.Phone;
                     document.getElementById('email').innerText = data['e-mail'];
 
-                    // Gestion des liens des réseaux sociaux
                     var socialMediaLinks = {
                         'Facebook': data.Facebook,
                         'Instagram': data.Instagram,
@@ -220,10 +229,14 @@
                             document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
                         }
                     }
+                } else {
+                    console.log("Le document n'existe pas !");
                 }
             }).catch((error) => {
                 console.log("Erreur lors de la récupération du document :", error);
             });
     </script>
+
 </body>
+
 </html>
