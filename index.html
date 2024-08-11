@@ -193,28 +193,13 @@
         var db = firebase.firestore();
         var storage = firebase.storage();
 
-        var userId = "USER_ID"; // Remplace par l'ID utilisateur réel
+        var userId = "USER_ID";
 
         db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
             .get()
             .then((doc) => {
                 if (doc.exists) {
                     var data = doc.data();
-
-                    // Vérification et application des couleurs
-                    if (data.primaryColor && data.secondaryColor && data.containerBackgroundColor) {
-                        document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
-                        document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
-                        document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor);
-                    } else {
-                        console.log("Problème avec les couleurs dans la base de données");
-                    }
-
-                    // Mettre à jour les autres éléments du DOM
-                    document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
-                    document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
-                    document.getElementById("phone").textContent = data.Phone;
-                    document.getElementById("email").textContent = data.email;
 
                     if (data.imageUrl) {
                         var imageRef = storage.refFromURL(data.imageUrl);
@@ -227,10 +212,21 @@
                         document.getElementById("profilePicture").src = "default-profile.png";
                     }
 
+                    document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
+                    document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
+                    document.getElementById("phone").textContent = data.Phone;
+                    document.getElementById("email").textContent = data.email;
+
                     document.getElementById("facebookLink").href = data.Facebook || "#";
                     document.getElementById("instagramLink").href = data.Instagram || "#";
                     document.getElementById("linkedinLink").href = data.LinkedIn || "#";
                     document.getElementById("twitterLink").href = data.Twitter || "#";
+
+                    // Applying colors
+                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
+                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
+                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+
                 } else {
                     console.log("No such document!");
                 }
@@ -242,3 +238,4 @@
 </body>
 
 </html>
+``
