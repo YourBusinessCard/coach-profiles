@@ -17,7 +17,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor); /* Application stricte de la couleur primaire récupérée */
+            background-color: var(--primaryColor);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -93,7 +93,7 @@
 
         .social-media a {
             background-color: var(--secondaryColor, white);
-            color: var(--primaryColor);
+            color: var(--primaryColor, #517694);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -192,14 +192,34 @@
                     // Vérification des couleurs récupérées
                     console.log("Couleur primaire récupérée :", data.primaryColor);
 
-                    // Application stricte de la couleur récupérée
+                    // Application de la couleur récupérée
                     if (data.primaryColor) {
                         document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
                     } else {
-                        console.log("Aucune couleur primaire récupérée, application de la couleur par défaut.");
+                        console.log("Aucune couleur primaire récupérée.");
                     }
 
-                    // Autres assignations de données (nom, description, etc.)
+                    // Application des autres informations (nom, description, etc.)
+                    document.getElementById("name").textContent = data.firstName + " " + data.lastName.toUpperCase();
+                    document.getElementById("description").textContent = data.description;
+                    document.getElementById("phone").textContent = data.Phone;
+                    document.getElementById("email").textContent = data['e-mail'];
+                    document.getElementById("profilePicture").src = data.imageUrl;
+
+                    // Liens sociaux
+                    if (data.Facebook) {
+                        document.getElementById("facebookLink").href = data.Facebook;
+                    }
+                    if (data.Instagram) {
+                        document.getElementById("instagramLink").href = data.Instagram;
+                    }
+                    if (data.LinkedIn) {
+                        document.getElementById("linkedinLink").href = data.LinkedIn;
+                    }
+                    if (data.Twitter) {
+                        document.getElementById("twitterLink").href = data.Twitter;
+                    }
+
                 } else {
                     console.log("Le document n'existe pas !");
                 }
