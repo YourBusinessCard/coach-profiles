@@ -1,192 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coach Profile</title>
+    <title>Carte de Visite</title>
     <style>
-        :root {
-            --primaryColor: #ffffff;
-            --secondaryColor: #ffffff;
-        }
-
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #f0f0f0;
             margin: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .card {
-            background-color: var(--primaryColor);
-            width: 300px;
+        .container {
+            background-color: var(--primaryColor, #537f5d93);
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            width: 400px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card img {
+        .texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('texture.png');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .profile-picture {
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 16px;
             object-fit: cover;
-            margin-bottom: 20px;
+            background-color: #ffffff;
+            border: 2px solid white;
         }
 
-        .card h1 {
-            margin: 0;
-            font-size: 24px;
-            color: white;
-        }
-
-        .card p {
+        h1 {
             margin: 10px 0;
-            color: white;
+            font-size: 22px;
+            text-transform: uppercase;
+            color: var(--secondaryColor, white);
+        }
+
+        .about {
+            margin-bottom: 16px;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--secondaryColor, white);
+        }
+
+        .description {
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 16px;
+            text-align: left;
+            font-size: 16px;
+            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
+            color: var(--secondaryColor, white);
+        }
+
+        .contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 16px;
         }
 
         .contact-info {
-            margin-top: 20px;
-        }
-
-        .contact-info div {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            color: white;
+            color: var(--secondaryColor, white);
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
         }
 
-        .contact-info div svg {
-            margin-right: 10px;
-            color: var(--secondaryColor);
+        .contact-info i {
+            margin-left: 8px;
         }
 
         .social-media {
-            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 16px;
         }
 
         .social-media a {
-            margin: 0 5px;
-            color: white;
-            text-decoration: none;
-        }
-
-        .social-media a svg {
-            color: var(--secondaryColor);
-            background-color: white;
+            background-color: var(--secondaryColor, white);
+            color: var(--primaryColor, #517694);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            padding: 5px;
-        }
-
-        .custom-links {
-            margin-top: 20px;
-        }
-
-        .custom-links a {
-            display: inline-block;
-            margin: 5px 10px;
-            padding: 5px 10px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-decoration: none;
+            font-size: 18px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--secondaryColor, white);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
 
-<div class="card">
-    <img id="profile-img" src="" alt="Profile Image">
-    <h1 id="coach-name"></h1>
-    <p id="coach-description"></p>
-
-    <div class="contact-info">
-        <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M3.654 1.328a1 1 0 0 1 1.4-.243l2.67 2.66a1 1 0 0 1-.241 1.59l-1.017.508a1 1 0 0 0-.272 1.555l2.758 2.758a1 1 0 0 0 1.555-.272l.508-1.017a1 1 0 0 1 1.59-.241l2.66 2.67a1 1 0 0 1-.243 1.4l-2.387 1.592c-.436.29-.936.466-1.458.509a6.675 6.675 0 0 1-7.732-4.775 6.675 6.675 0 0 1 1.592-5.762l1.592-2.387z"/>
-            </svg>
-            <span id="phone-number"></span>
+    <div class="container">
+        <div class="texture"></div>
+        <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
+        <h1 id="name">Jean Baptiste PARFAIT</h1>
+        <div class="about">About me</div>
+        <div class="description" id="description">
+            Coach sportif depuis 2 ans.<br>
+            Perte de poids<br>
+            Prise de masse<br>
+            Gain de muscle
         </div>
-        <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm8 3L1.734 3.192A1 1 0 0 0 1 4v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-.734-.808L8 7zm0-2L14.5 2.5H1.5L8 5z"/>
-            </svg>
-            <span id="email-address"></span>
+        <div class="contact">
+            <div class="contact-info">
+                <span id="phone">07-61-30-58-28</span>
+                <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="contact-info">
+                <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
+                <i class="fas fa-envelope"></i>
+            </div>
+        </div>
+        <div class="social-media">
+            <a href="#" id="facebookLink"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
+            <a href="#" id="linkedinLink"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="buttons">
+            <button>Boutique</button>
+            <button>Boutique 2</button>
         </div>
     </div>
 
-    <div class="social-media" id="social-media-links">
-        <!-- Social Media Links will be injected here -->
-    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
-    <div class="custom-links" id="custom-links">
-        <!-- Custom Links will be injected here -->
-    </div>
-</div>
+    <script>
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-<script>
-    const userId = 'YOUR_USER_ID_HERE'; // Remplacez par l'ID utilisateur correct
+        firebase.initializeApp(firebaseConfig);
 
-    db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
-        .get()
-        .then((doc) => {
-            if (doc.exists) {
-                console.log("Document data:", doc.data()); // Ajout de log
-                var data = doc.data();
+        var db = firebase.firestore();
+        var storage = firebase.storage();
 
-                var primaryColor = data.primaryColor || '#ffffff';
-                var secondaryColor = data.secondaryColor || 'white';
+        var userId = "USER_ID";
 
-                document.documentElement.style.setProperty('--primaryColor', primaryColor);
-                document.documentElement.style.setProperty('--secondaryColor', secondaryColor);
+        db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+            .get()
+            .then((doc) => {
+                if (doc.exists) {
+                    var data = doc.data();
 
-                document.getElementById('coach-name').textContent = `${data.firstName} ${data.lastName.toUpperCase()}`;
-                document.getElementById('coach-description').innerHTML = data.description.replace(/\n/g, '<br>');
-                document.getElementById('phone-number').textContent = data.Phone;
-                document.getElementById('email-address').textContent = data['e-mail'];
-
-                if (data.imageUrl) {
-                    document.getElementById('profile-img').src = data.imageUrl;
-                }
-
-                // Social Media Links
-                const socialMediaLinks = ['Facebook', 'Instagram', 'LinkedIn', 'Twitter'];
-                const socialMediaIcons = {
-                    'Facebook': '<svg ...>...</svg>',
-                    'Instagram': '<svg ...>...</svg>',
-                    'LinkedIn': '<svg ...>...</svg>',
-                    'Twitter': '<svg ...>...</svg>',
-                };
-
-                socialMediaLinks.forEach((platform) => {
-                    if (data[platform]) {
-                        document.getElementById('social-media-links').innerHTML += `
-                            <a href="${data[platform]}" target="_blank">
-                                ${socialMediaIcons[platform]}
-                            </a>
-                        `;
+                    if (data.imageUrl) {
+                        var imageRef = storage.refFromURL(data.imageUrl);
+                        imageRef.getDownloadURL().then(function(url) {
+                            document.getElementById("profilePicture").src = url;
+                        }).catch(function(error) {
+                            console.log("Error getting download URL:", error);
+                        });
+                    } else {
+                        document.getElementById("profilePicture").src = "default-profile.png";
                     }
-                });
 
-                // Custom Links
-                for (let i = 1; i <= 2; i++) {
-                    if (data[`titleLink${i}`] && data[`link${i}`]) {
-                        document.getElementById('custom-links').innerHTML += `
-                            <a href="${data[`link${i}`]}" target="_blank">${data[`titleLink${i}`]}</a>
-                        `;
-                    }
+                    document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
+                    document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
+                    document.getElementById("phone").textContent = data.Phone;
+                    document.getElementById("email").textContent = data.email;
+
+                    document.getElementById("facebookLink").href = data.Facebook || "#";
+                    document.getElementById("instagramLink").href = data.Instagram || "#";
+                    document.getElementById("linkedinLink").href = data.LinkedIn || "#";
+                    document.getElementById("twitterLink").href = data.Twitter || "#";
+
+                    var primaryColor = data.primaryColor || '#517694';
+                    var rgbaColor = hexToRgba(primaryColor);
+                    document.documentElement.style.setProperty('--primaryColor', rgbaColor);
+                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
+                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+
+                } else {
+                    console.log("No such document!");
                 }
-            } else {
-                console.log("No such document!"); // Ajout de log pour document non trouvé
-            }
-        }).catch((error) => {
-            console.error("Error getting document:", error); // Ajout de log pour erreur
-        });
-</script>
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+
+        function hexToRgba(hex) {
+            const match = hex.match(/^#?(([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})?)$/);
+            if (!match) return hex; // Return the original color if no match
+
+            const r = parseInt(match[2], 16);
+            const g = parseInt(match[3], 16);
+            const b = parseInt(match[4], 16);
+            const a = match[5] ? parseInt(match[5], 16) / 255 : 1;
+
+            return `rgba(${r}, ${g}, ${b}, ${a})`;
+        }
+    </script>
 
 </body>
+
 </html>
