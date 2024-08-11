@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor, #537f5d93);
+            background-color: var(--primaryColor); /* Suppression de la valeur par défaut ici */
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -53,14 +52,14 @@
             margin: 10px 0;
             font-size: 22px;
             text-transform: uppercase;
-            color: var(--secondaryColor, white);
+            color: var(--secondaryColor);
         }
 
         .about {
             margin-bottom: 16px;
             font-weight: bold;
             font-size: 18px;
-            color: var(--secondaryColor, white);
+            color: var(--secondaryColor);
         }
 
         .description {
@@ -70,8 +69,8 @@
             margin-bottom: 16px;
             text-align: left;
             font-size: 16px;
-            background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
-            color: var(--secondaryColor, white);
+            background-color: var(--containerBackgroundColor);
+            color: var(--secondaryColor);
         }
 
         .contact {
@@ -85,7 +84,7 @@
         .contact-info {
             display: flex;
             align-items: center;
-            color: var(--secondaryColor, white);
+            color: var(--secondaryColor);
             background-color: rgba(255, 255, 255, 0.2);
             padding: 10px 20px;
             border-radius: 30px;
@@ -103,8 +102,8 @@
         }
 
         .social-media a {
-            background-color: var(--secondaryColor, white);
-            color: var(--primaryColor, #517694);
+            background-color: var(--secondaryColor);
+            color: var(--primaryColor);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -126,7 +125,7 @@
             border-radius: 8px;
             border: none;
             background-color: rgba(255, 255, 255, 0.2);
-            color: var(--secondaryColor, white);
+            color: var(--secondaryColor);
             font-size: 14px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -138,9 +137,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-
 <body>
-
     <div class="container">
         <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
@@ -191,65 +188,42 @@
         firebase.initializeApp(firebaseConfig);
 
         var db = firebase.firestore();
-        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2"; // Remplace par l'ID de l'utilisateur
+        var storage = firebase.storage();
+
+        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2";
 
         db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
             .get()
             .then((doc) => {
                 if (doc.exists) {
                     var data = doc.data();
-
-                    // Vérification des couleurs récupérées
-                    console.log("Couleur primaire récupérée :", data.primaryColor);
-
-                    // Application de la couleur récupérée
-                    if (data.primaryColor && /^#[0-9A-F]{8}$/i.test(data.primaryColor)) {
+                    if (data.primaryColor) {
                         document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
-                    } else {
-                        console.log("Code couleur invalide ou non présent. Utilisation de la couleur par défaut.");
                     }
 
-                    // Application des autres données
-                    document.getElementById("profilePicture").src = data.imageUrl;
-                    document.getElementById("name").textContent = data.firstName + " " + data.lastName.toUpperCase();
-                    document.getElementById("description").innerHTML = data.description.replace(/\n/g, '<br>');
-                    document.getElementById("phone").textContent = data.Phone;
-                    document.getElementById("email").textContent = data['e-mail'];
+                    // Application des autres informations ici
+                    document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
+                    document.getElementById('description').innerText = data.description;
+                    document.getElementById('phone').innerText = data.Phone;
+                    document.getElementById('email').innerText = data['e-mail'];
 
-                    // Application des liens des réseaux sociaux
-                    if (data.Facebook) {
-                        document.getElementById("facebookLink").href = data.Facebook;
-                    }
-                    if (data.Instagram) {
-                        document.getElementById("instagramLink").href = data.Instagram;
-                    }
-                    if (data.LinkedIn) {
-                        document.getElementById("linkedinLink").href = data.LinkedIn;
-                    }
-                    if (data.Twitter) {
-                        document.getElementById("twitterLink").href = data.Twitter;
-                    }
+                    // Gestion des liens des réseaux sociaux
+                    var socialMediaLinks = {
+                        'Facebook': data.Facebook,
+                        'Instagram': data.Instagram,
+                        'LinkedIn': data.LinkedIn,
+                        'Twitter': data.Twitter
+                    };
 
-                    // Application des liens personnalisés
-                    var customLinksContainer = document.getElementById("customLinksContainer");
-                    if (data.titleLink1) {
-                        var link1 = document.createElement("div");
-                        link1.textContent = data.titleLink1;
-                        customLinksContainer.appendChild(link1);
+                    for (var key in socialMediaLinks) {
+                        if (socialMediaLinks[key]) {
+                            document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
+                        }
                     }
-                    if (data.titleLink2) {
-                        var link2 = document.createElement("div");
-                        link2.textContent = data.titleLink2;
-                        customLinksContainer.appendChild(link2);
-                    }
-                } else {
-                    console.log("Le document n'existe pas !");
                 }
             }).catch((error) => {
                 console.log("Erreur lors de la récupération du document :", error);
             });
     </script>
-
 </body>
-
 </html>
