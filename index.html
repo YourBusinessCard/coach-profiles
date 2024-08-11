@@ -201,5 +201,31 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    if (data.imageUrl) {
-                        var imageRef
+                    // Assignation des couleurs aux variables CSS
+                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#537f5d93');
+                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
+                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+
+                    // Mise à jour des autres informations
+                    document.getElementById('profilePicture').src = data.imageUrl;
+                    document.getElementById('name').textContent = `${data.firstName} ${data.lastName}`;
+                    document.getElementById('description').textContent = data.description;
+                    document.getElementById('phone').textContent = data.Phone;
+                    document.getElementById('email').textContent = data['e-mail'];
+                    
+                    // Mise à jour des liens des réseaux sociaux
+                    document.getElementById('facebookLink').href = data.Facebook || '#';
+                    document.getElementById('instagramLink').href = data.Instagram || '#';
+                    document.getElementById('linkedinLink').href = data.LinkedIn || '#';
+                    document.getElementById('twitterLink').href = data.Twitter || '#';
+                } else {
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+    </script>
+
+</body>
+
+</html>
