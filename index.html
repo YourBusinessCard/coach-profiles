@@ -7,8 +7,8 @@
     <title>Coach Profile</title>
     <style>
         :root {
-            --primaryColor: #FFFFFF; /* Default fallback color */
-            --secondaryColor: #FFFFFF; /* Default fallback color */
+            --primaryColor: #FFFFFF; /* Couleur par défaut */
+            --secondaryColor: #FFFFFF; /* Couleur par défaut */
         }
 
         body {
@@ -23,7 +23,7 @@
 
         .container {
             background-color: var(--primaryColor);
-            color: #ffffff;
+            color: #FFFFFF;
             width: 300px;
             padding: 20px;
             border-radius: 15px;
@@ -34,17 +34,21 @@
 
         .container h1 {
             font-size: 24px;
-            color: #ffffff;
+            margin: 10px 0;
         }
 
         .container p {
             font-size: 14px;
-            color: #ffffff;
+            margin: 5px 0;
         }
 
         .contact-info {
             margin-top: 20px;
             text-align: left;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
         }
 
         .contact-info i {
@@ -88,12 +92,25 @@
             background-color: #ffffff;
             margin: 0 auto;
             margin-bottom: 10px;
+            overflow: hidden;
         }
 
         .profile-pic img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .about-me {
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .description-box {
+            border: 1px solid #FFFFFF;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -105,7 +122,10 @@
             <img id="profile-img" src="" alt="Profile Picture">
         </div>
         <h1 id="coach-name">Jean Baptiste PARFAIT</h1>
-        <p id="coach-description">Coach sportif depuis 2 ans.<br>Perte de poids<br>Prise de masse<br>Gain de muscle</p>
+        <div class="about-me">About me</div>
+        <div class="description-box">
+            <p id="coach-description">Coach sportif depuis 2 ans.<br>Perte de poids<br>Prise de masse<br>Gain de muscle</p>
+        </div>
         <div class="contact-info">
             <p><i class="fas fa-phone"></i> <span id="phone-number">07-61-30-58-28</span></p>
             <p><i class="fas fa-envelope"></i> <span id="email-address">IUIYgigigLFJYDi@fkfhg.com</span></p>
