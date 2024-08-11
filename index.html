@@ -201,10 +201,14 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    // Appliquer les couleurs depuis la base de données
-                    document.documentElement.style.setProperty('--primaryColor', data.primaryColor || '#517694');
-                    document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor || 'white');
-                    document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor || 'rgba(255, 255, 255, 0.2)');
+                    // Vérification et application des couleurs
+                    if (data.primaryColor && data.secondaryColor && data.containerBackgroundColor) {
+                        document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
+                        document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
+                        document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor);
+                    } else {
+                        console.log("Problème avec les couleurs dans la base de données");
+                    }
 
                     // Mettre à jour les autres éléments du DOM
                     document.getElementById("name").textContent = `${data.firstName} ${data.lastName}`;
