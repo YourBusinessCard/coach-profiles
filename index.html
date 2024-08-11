@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coach Profile</title>
     <style>
         :root {
-            --primaryColor: #517694; /* Default fallback color */
-            --secondaryColor: #ffffff; /* Default fallback color */
+            --primaryColor: #FFFFFF; /* Default fallback color */
+            --secondaryColor: #FFFFFF; /* Default fallback color */
         }
 
         body {
@@ -22,11 +23,13 @@
 
         .container {
             background-color: var(--primaryColor);
+            color: #ffffff;
             width: 300px;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            position: relative;
         }
 
         .container h1 {
@@ -41,6 +44,7 @@
 
         .contact-info {
             margin-top: 20px;
+            text-align: left;
         }
 
         .contact-info i {
@@ -76,72 +80,98 @@
         .custom-links button:hover {
             background-color: rgba(255, 255, 255, 0.5);
         }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1 id="coach-name">Jean Baptiste PARFAIT</h1>
-    <p id="coach-description">Coach sportif depuis 2 ans.<br>Perte de poids<br>Prise de masse<br>Gain de muscle</p>
-    <div class="contact-info">
-        <p><i class="fas fa-phone"></i>07-61-30-58-28</p>
-        <p><i class="fas fa-envelope"></i>IUIYgigigLFJYDi@fkfhg.com</p>
+    <div class="container">
+        <div class="profile-pic">
+            <img id="profile-img" src="" alt="Profile Picture">
+        </div>
+        <h1 id="coach-name">Jean Baptiste PARFAIT</h1>
+        <p id="coach-description">Coach sportif depuis 2 ans.<br>Perte de poids<br>Prise de masse<br>Gain de muscle</p>
+        <div class="contact-info">
+            <p><i class="fas fa-phone"></i> <span id="phone-number">07-61-30-58-28</span></p>
+            <p><i class="fas fa-envelope"></i> <span id="email-address">IUIYgigigLFJYDi@fkfhg.com</span></p>
+        </div>
+        <div class="social-icons">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin"></i>
+            <i class="fab fa-twitter"></i>
+        </div>
+        <div class="custom-links">
+            <button>Boutique</button>
+            <button>Boutique 2</button>
+        </div>
     </div>
-    <div class="social-icons">
-        <i class="fab fa-facebook"></i>
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-linkedin"></i>
-        <i class="fab fa-twitter"></i>
-    </div>
-    <div class="custom-links">
-        <button>Boutique</button>
-        <button>Boutique 2</button>
-    </div>
-</div>
 
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-<script>
-    var firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
+    <script>
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-    firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
 
-    var db = firebase.firestore();
+        var db = firebase.firestore();
 
-    var userId = "USER_ID";  // Remplacez par l'ID utilisateur approprié
+        var userId = "USER_ID";  // Remplacez par l'ID utilisateur approprié
 
-    db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
-        .get()
-        .then((doc) => {
-            if (doc.exists) {
-                var data = doc.data();
+        db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+            .get()
+            .then((doc) => {
+                if (doc.exists) {
+                    var data = doc.data();
 
-                var primaryColor = data.primaryColor || '#517694';
-                var secondaryColor = data.secondaryColor || 'white';
+                    var primaryColor = data.primaryColor || '#ffffff';
+                    var secondaryColor = data.secondaryColor || 'white';
 
-                document.documentElement.style.setProperty('--primaryColor', primaryColor);
-                document.documentElement.style.setProperty('--secondaryColor', secondaryColor);
+                    document.documentElement.style.setProperty('--primaryColor', primaryColor);
+                    document.documentElement.style.setProperty('--secondaryColor', secondaryColor);
 
-                document.getElementById('coach-name').textContent = `${data.firstName} ${data.lastName.toUpperCase()}`;
-                document.getElementById('coach-description').innerHTML = data.description.replace(/\n/g, '<br>');
-            } else {
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-</script>
+                    document.getElementById('coach-name').textContent = `${data.firstName} ${data.lastName.toUpperCase()}`;
+                    document.getElementById('coach-description').innerHTML = data.description.replace(/\n/g, '<br>');
+                    document.getElementById('phone-number').textContent = data.Phone;
+                    document.getElementById('email-address').textContent = data['e-mail'];
+
+                    if (data.imageUrl) {
+                        document.getElementById('profile-img').src = data.imageUrl;
+                    }
+                } else {
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+    </script>
 
 </body>
+
 </html>
