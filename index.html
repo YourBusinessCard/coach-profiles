@@ -69,13 +69,14 @@
             align-items: flex-end; /* Alignement à droite */
             margin-bottom: 16px;
             font-size: 16px;
+            position: relative;
         }
 
         .contact-info {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            margin-bottom: -8px; /* Superposer les éléments */
+            margin-bottom: -20px; /* Superposition plus importante */
             background-color: transparent;
             border: 2px solid white;
             padding: 5px 10px;
@@ -83,6 +84,10 @@
             color: var(--secondaryColor, white);
             position: relative;
             z-index: 1;
+        }
+
+        .contact-info:last-child {
+            margin-bottom: 0; /* Éviter le dépassement pour le dernier élément */
         }
 
         .contact-info span {
@@ -94,10 +99,6 @@
             padding: 8px;
             border-radius: 50%;
             color: var(--secondaryColor, #000); /* Couleur secondaire pour l'icône */
-        }
-
-        .contact-info:first-child {
-            margin-bottom: 4px; /* Petit espacement entre les deux contacts */
         }
 
         .social-media {
