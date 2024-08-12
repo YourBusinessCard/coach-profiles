@@ -189,11 +189,16 @@
                 if (doc.exists) {
                     var data = doc.data();
                     var primaryColor = data.primaryColor;
+                    
+                    // Si la couleur est sur 8 caractères, tronque les 2 premiers pour ne garder que le #RRGGBB
+                    if(primaryColor.length === 9) {
+                        primaryColor = "#" + primaryColor.slice(3);
+                    }
 
                     // Vérification que la couleur est correcte
                     console.log("Couleur primaire récupérée:", primaryColor);
 
-                    // Application directe de la couleur
+                    // Application stricte de la couleur
                     document.getElementById("visitCardContainer").style.backgroundColor = primaryColor;
                 } else {
                     console.log("Le document n'existe pas !");
