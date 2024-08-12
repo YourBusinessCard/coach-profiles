@@ -189,10 +189,11 @@
         var db = firebase.firestore();
         var storage = firebase.storage();
 
-        var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2"; // Remplace par l'ID de l'utilisateur
+        var userId = "UserID"; // Remplacez par l'ID correct de l'utilisateur
+        var documentId = "visitcarID"; // ID correct du document
 
         console.log("Tentative de récupération du document visitcard...");
-        db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
+        db.collection("users").doc(userId).collection("visitcard").doc(documentId)
             .get()
             .then((doc) => {
                 console.log("Requête Firestore réussie");
