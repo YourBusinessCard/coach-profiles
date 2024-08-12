@@ -60,7 +60,8 @@
             text-align: left;
             font-size: 16px;
             background-color: var(--containerBackgroundColor, rgba(255, 255, 255, 0.2));
-            color: var(--secondaryColor, white);
+            /* Retiré l'application de la couleur secondaire ici */
+            color: white; /* Remettre une couleur par défaut */
         }
 
         .contact {
@@ -236,9 +237,11 @@
                             console.log("Couleur secondaire brute : ", data.secondaryColor);
                             let rgbaColor = hexToRgba(data.secondaryColor);
                             
-                            // Appliquer la couleur secondaire aux icônes de contact
+                            // Appliquer la couleur secondaire aux icônes de contact uniquement
                             document.querySelector('.contact-info i.fa-phone-alt').style.color = rgbaColor;
                             document.querySelector('.contact-info i.fa-envelope').style.color = rgbaColor;
+                            
+                            // Ne PAS appliquer la couleur secondaire à d'autres éléments comme la description
                         }
                         if (data.containerBackgroundColor) {
                             console.log("Couleur de fond brute : ", data.containerBackgroundColor);
