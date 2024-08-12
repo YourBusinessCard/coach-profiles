@@ -211,15 +211,18 @@
 
                         // Application des couleurs récupérées
                         if (data.primaryColor) {
+                            console.log("Couleur primaire brute : ", data.primaryColor);
                             let rgbaColor = hexToRgba(data.primaryColor);
                             document.documentElement.style.setProperty('--primaryColor', rgbaColor);
                             console.log("Couleur primaire appliquée en rgba :", rgbaColor);
                         }
                         if (data.secondaryColor) {
+                            console.log("Couleur secondaire brute : ", data.secondaryColor);
                             document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
                             console.log("Couleur secondaire appliquée :", data.secondaryColor);
                         }
                         if (data.containerBackgroundColor) {
+                            console.log("Couleur de fond brute : ", data.containerBackgroundColor);
                             document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor);
                             console.log("Couleur de fond du container appliquée :", data.containerBackgroundColor);
                         }
