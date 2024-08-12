@@ -79,7 +79,7 @@
             margin-bottom: 8px;
             background-color: transparent;
             border: 2px solid white;
-            padding: 5px 20px 5px 5px;
+            padding: 5px 40px 5px 5px; /* Ajustement pour l'espacement correct */
             border-radius: 50px;
             color: var(--secondaryColor, white);
             position: relative;
@@ -92,19 +92,7 @@
             border-radius: 50%;
             color: var(--secondaryColor, #000);
             position: absolute;
-            right: -15px; /* Ajustement pour aligner le bord de l'icône avec le bord du contour */
-        }
-
-        .contact-info::after {
-            content: "";
-            display: block;
-            width: 2px; /* Ajuster la largeur du trait */
-            height: 100%;
-            background-color: white;
-            position: absolute;
-            right: 0;
-            top: 0;
-            border-radius: 0 50px 50px 0; /* Pour arrondir la partie droite */
+            right: -22px; /* Superposer le bord droit de l'icône avec le bord du contour */
         }
 
         .social-media {
