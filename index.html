@@ -79,15 +79,11 @@
             margin-bottom: 8px;
             background-color: transparent;
             border: 2px solid white;
-            padding: 5px 20px 5px 5px; /* Augmentez l'espace à gauche pour l'icône */
+            padding: 5px 20px 5px 5px;
             border-radius: 50px;
             color: var(--secondaryColor, white);
             position: relative;
             overflow: visible;
-        }
-
-        .contact-info:last-child {
-            margin-bottom: 0;
         }
 
         .contact-info i {
@@ -95,10 +91,12 @@
             padding: 8px;
             border-radius: 50%;
             color: var(--secondaryColor, #000);
-            position: absolute;
-            right: -15px; /* Superpose le bord du rond avec le contour */
-            top: 50%;
-            transform: translateY(-50%);
+            position: relative;
+            right: 0px; /* Ajustement pour aligner le bord de l'icône avec le bord du contour */
+        }
+
+        .contact-info span {
+            margin-right: 25px; /* Espace pour s'assurer que le texte ne chevauche pas l'icône */
         }
 
         .social-media {
