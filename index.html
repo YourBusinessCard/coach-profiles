@@ -65,8 +65,8 @@
 
         .contact {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column; /* Empiler les contacts verticalement */
+            align-items: flex-start;
             margin-bottom: 16px;
             font-size: 16px;
         }
@@ -74,17 +74,16 @@
         .contact-info {
             display: flex;
             align-items: center;
-            background-color: white; /* Fond blanc autour des icônes */
-            padding: 10px 20px;
-            border-radius: 30px;
+            margin-bottom: 8px; /* Espacement entre les lignes de contact */
+            color: var(--secondaryColor, white);
         }
 
         .contact-info i {
-            margin-left: 8px;
-            color: var(--secondaryColor, #000); /* Couleur secondaire pour l'icône */
-            background-color: white; /* Arrière-plan blanc pour l'icône */
-            border-radius: 50%; /* Pour que l'icône ait un arrière-plan circulaire */
+            margin-right: 10px;
+            background-color: white; /* Arrière-plan blanc autour de l'icône */
             padding: 8px;
+            border-radius: 50%; /* Pour un arrière-plan circulaire autour de l'icône */
+            color: var(--secondaryColor, #000); /* Couleur secondaire pour l'icône */
         }
 
         .social-media {
@@ -157,12 +156,12 @@
         <div class="description" id="description"></div>
         <div class="contact">
             <div class="contact-info">
-                <span id="phone"></span>
                 <i class="fas fa-phone-alt"></i>
+                <span id="phone"></span>
             </div>
             <div class="contact-info">
-                <span id="email"></span>
                 <i class="fas fa-envelope"></i>
+                <span id="email"></span>
             </div>
         </div>
         <div class="social-media">
