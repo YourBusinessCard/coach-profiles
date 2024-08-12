@@ -144,21 +144,16 @@
     <div class="container">
         <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
-        <h1 id="name">Jean Baptiste PARFAIT</h1>
+        <h1 id="name"></h1>
         <div class="about">About me</div>
-        <div class="description" id="description">
-            Coach sportif depuis 2 ans.<br>
-            Perte de poids<br>
-            Prise de masse<br>
-            Gain de muscle
-        </div>
+        <div class="description" id="description"></div>
         <div class="contact">
             <div class="contact-info">
-                <span id="phone">07-61-30-58-28</span>
+                <span id="phone"></span>
                 <i class="fas fa-phone-alt"></i>
             </div>
             <div class="contact-info">
-                <span id="email">IUIYgigigLFJYDi@fkfhg.com</span>
+                <span id="email"></span>
                 <i class="fas fa-envelope"></i>
             </div>
         </div>
@@ -169,8 +164,8 @@
             <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
         </div>
         <div class="buttons">
-            <button>Boutique</button>
-            <button>Boutique 2</button>
+            <button id="button1"></button>
+            <button id="button2"></button>
         </div>
     </div>
 
@@ -201,17 +196,18 @@
                 if (doc.exists) {
                     var data = doc.data();
 
-                    // Vérification des couleurs récupérées
-                    console.log("Couleur primaire récupérée :", data.primaryColor);  // Debugging line
-
-                    // Application de la couleur récupérée
+                    // Application des couleurs récupérées
                     if (data.primaryColor) {
                         document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
-                    } else {
-                        console.log("Aucune couleur primaire récupérée, application de la couleur par défaut.");
+                    }
+                    if (data.secondaryColor) {
+                        document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
+                    }
+                    if (data.containerBackgroundColor) {
+                        document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor);
                     }
 
-                    // Autres assignations de données (nom, description, etc.)
+                    // Autres assignations de données
                     document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
                     document.getElementById('description').innerText = data.description;
                     document.getElementById('phone').innerText = data.Phone;
@@ -229,6 +225,21 @@
                             document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
                         }
                     }
+
+                    // Assigner l'URL de l'image de profil
+                    if (data.imageUrl) {
+                        document.getElementById('profilePicture').src = data.imageUrl;
+                    }
+
+                    // Gestion de la texture
+                    if (!data.isTextureApplied) {
+                        document.querySelector('.texture').style.display = 'none';
+                    }
+
+                    // Assigner les textes des boutons
+                    document.getElementById('button1').innerText = data.titleLink1;
+                    document.getElementById('button2').innerText = data.titleLink2;
+
                 } else {
                     console.log("Le document n'existe pas !");
                 }
