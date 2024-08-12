@@ -130,7 +130,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name"></h1>
         <div class="about">About me</div>
@@ -177,13 +177,11 @@
         var db = firebase.firestore();
         var storage = firebase.storage();
 
-        // Fonction pour récupérer le UserID depuis l'URL
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        // Fonction pour convertir une couleur hexadécimale en rgba sans transparence
         function hexToRgba(hex) {
             let r = parseInt(hex.slice(1, 3), 16);
             let g = parseInt(hex.slice(3, 5), 16);
@@ -192,8 +190,8 @@
             return `rgba(${r}, ${g}, ${b}, 1)`; // Appliquer une opacité de 1 pour éliminer la transparence
         }
 
-        var userId = getQueryParam('userID'); // Extrait le userID de l'URL
-        var documentId = "visitcarID"; // ID correct du document
+        var userId = getQueryParam('userID'); 
+        var documentId = "visitcarID"; 
 
         if (userId) {
             console.log("UserID trouvé dans l'URL :", userId);
@@ -208,11 +206,10 @@
 
                         var data = doc.data();
 
-                        // Application des couleurs récupérées
                         if (data.primaryColor) {
                             console.log("Couleur primaire brute : ", data.primaryColor);
                             let rgbaColor = hexToRgba(data.primaryColor);
-                            document.documentElement.style.setProperty('--primaryColor', rgbaColor);
+                            document.getElementById('mainContainer').style.backgroundColor = rgbaColor;
                             console.log("Couleur primaire appliquée en rgba :", rgbaColor);
                         }
                         if (data.secondaryColor) {
@@ -226,7 +223,6 @@
                             console.log("Couleur de fond du container appliquée :", data.containerBackgroundColor);
                         }
 
-                        // Autres assignations de données
                         document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
                         console.log("Nom appliqué :", data.firstName + ' ' + data.lastName.toUpperCase());
 
@@ -253,13 +249,11 @@
                             }
                         }
 
-                        // Assigner l'URL de l'image de profil
                         if (data.imageUrl) {
                             document.getElementById('profilePicture').src = data.imageUrl;
                             console.log("Image de profil appliquée :", data.imageUrl);
                         }
 
-                        // Assigner les textes des boutons
                         document.getElementById('button1').innerText = data.titleLink1;
                         document.getElementById('button2').innerText = data.titleLink2;
                         console.log("Boutons appliqués :", data.titleLink1, data.titleLink2);
