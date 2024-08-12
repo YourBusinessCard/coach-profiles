@@ -91,12 +91,20 @@
             padding: 8px;
             border-radius: 50%;
             color: var(--secondaryColor, #000);
-            position: relative;
-            right: 0px; /* Ajustement pour aligner le bord de l'icône avec le bord du contour */
+            position: absolute;
+            right: -15px; /* Ajustement pour aligner le bord de l'icône avec le bord du contour */
         }
 
-        .contact-info span {
-            margin-right: 25px; /* Espace pour s'assurer que le texte ne chevauche pas l'icône */
+        .contact-info::after {
+            content: "";
+            display: block;
+            width: 2px; /* Ajuster la largeur du trait */
+            height: 100%;
+            background-color: white;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border-radius: 0 50px 50px 0; /* Pour arrondir la partie droite */
         }
 
         .social-media {
