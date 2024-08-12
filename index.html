@@ -174,13 +174,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
     <script>
+        console.log("Initialisation de Firebase...");
         var firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AlzaSyC9i5SydpMQiG2eyJ7KYbYdEC8WjBNpLH4",
+            authDomain: "yourprogram-h00ehw.firebaseapp.com",
+            projectId: "yourprogram-h00ehw",
+            storageBucket: "yourprogram-h00ehw.appspot.com",
+            messagingSenderId: "218168070365",
+            appId: "1:218168070365:web:af321243b1a2b3f8e5a432"
         };
 
         firebase.initializeApp(firebaseConfig);
@@ -190,28 +191,42 @@
 
         var userId = "4ECxPqQq05Z6MhfzLD8vUWIJ8fj2"; // Remplace par l'ID de l'utilisateur
 
+        console.log("Tentative de récupération du document visitcard...");
         db.collection("users").doc(userId).collection("visitcard").doc("visitcarID")
             .get()
             .then((doc) => {
+                console.log("Requête Firestore réussie");
                 if (doc.exists) {
+                    console.log("Le document existe :", doc.data());
+
                     var data = doc.data();
 
                     // Application des couleurs récupérées
                     if (data.primaryColor) {
                         document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
+                        console.log("Couleur primaire appliquée :", data.primaryColor);
                     }
                     if (data.secondaryColor) {
                         document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
+                        console.log("Couleur secondaire appliquée :", data.secondaryColor);
                     }
                     if (data.containerBackgroundColor) {
                         document.documentElement.style.setProperty('--containerBackgroundColor', data.containerBackgroundColor);
+                        console.log("Couleur de fond du container appliquée :", data.containerBackgroundColor);
                     }
 
                     // Autres assignations de données
                     document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
+                    console.log("Nom appliqué :", data.firstName + ' ' + data.lastName.toUpperCase());
+
                     document.getElementById('description').innerText = data.description;
+                    console.log("Description appliquée :", data.description);
+
                     document.getElementById('phone').innerText = data.Phone;
+                    console.log("Numéro de téléphone appliqué :", data.Phone);
+
                     document.getElementById('email').innerText = data['e-mail'];
+                    console.log("Email appliqué :", data['e-mail']);
 
                     var socialMediaLinks = {
                         'Facebook': data.Facebook,
@@ -223,28 +238,33 @@
                     for (var key in socialMediaLinks) {
                         if (socialMediaLinks[key]) {
                             document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
+                            console.log(key + " appliqué :", socialMediaLinks[key]);
                         }
                     }
 
                     // Assigner l'URL de l'image de profil
                     if (data.imageUrl) {
                         document.getElementById('profilePicture').src = data.imageUrl;
+                        console.log("Image de profil appliquée :", data.imageUrl);
                     }
 
                     // Gestion de la texture
                     if (!data.isTextureApplied) {
                         document.querySelector('.texture').style.display = 'none';
+                        console.log("Texture désactivée");
                     }
 
                     // Assigner les textes des boutons
                     document.getElementById('button1').innerText = data.titleLink1;
                     document.getElementById('button2').innerText = data.titleLink2;
+                    console.log("Boutons appliqués :", data.titleLink1, data.titleLink2);
 
                 } else {
-                    console.log("Le document n'existe pas !");
+                    console.log("Le document n'existe pas");
                 }
-            }).catch((error) => {
-                console.log("Erreur lors de la récupération du document :", error);
+            })
+            .catch((error) => {
+                console.error("Erreur lors de la récupération du document :", error);
             });
     </script>
 
