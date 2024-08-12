@@ -74,7 +74,6 @@
         .contact-info {
             display: flex;
             align-items: center;
-            color: var(--secondaryColor, white);
             background-color: white; /* Fond blanc autour des icônes */
             padding: 10px 20px;
             border-radius: 30px;
@@ -82,7 +81,10 @@
 
         .contact-info i {
             margin-left: 8px;
-            color: var(--secondaryColor, white); /* Couleur secondaire pour l'icône */
+            color: var(--secondaryColor, #000); /* Couleur secondaire pour l'icône */
+            background-color: white; /* Arrière-plan blanc pour l'icône */
+            border-radius: 50%; /* Pour que l'icône ait un arrière-plan circulaire */
+            padding: 8px;
         }
 
         .social-media {
@@ -242,9 +244,7 @@
                         if (data.secondaryColor) {
                             console.log("Couleur secondaire brute : ", data.secondaryColor);
                             let rgbaColor = hexToRgba(data.secondaryColor);
-                            document.documentElement.style.setProperty('--secondaryColor', rgbaColor);
-                            console.log("Couleur secondaire appliquée en rgba :", rgbaColor);
-
+                            
                             // Appliquer la couleur secondaire aux icônes de contact
                             document.querySelector('.contact-info i.fa-phone-alt').style.color = rgbaColor;
                             document.querySelector('.contact-info i.fa-envelope').style.color = rgbaColor;
