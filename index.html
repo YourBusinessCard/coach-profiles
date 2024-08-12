@@ -28,17 +28,6 @@
             overflow: hidden;
         }
 
-        .texture {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('texture.png');
-            opacity: 0.1;
-            pointer-events: none;
-        }
-
         .profile-picture {
             border-radius: 50%;
             width: 120px;
@@ -142,7 +131,6 @@
 <body>
 
     <div class="container">
-        <div class="texture"></div>
         <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
         <h1 id="name"></h1>
         <div class="about">About me</div>
@@ -255,4 +243,26 @@
                         // Assigner l'URL de l'image de profil
                         if (data.imageUrl) {
                             document.getElementById('profilePicture').src = data.imageUrl;
-                            console.log("Image de profil appliquée
+                            console.log("Image de profil appliquée :", data.imageUrl);
+                        }
+
+                        // Assigner les textes des boutons
+                        document.getElementById('button1').innerText = data.titleLink1;
+                        document.getElementById('button2').innerText = data.titleLink2;
+                        console.log("Boutons appliqués :", data.titleLink1, data.titleLink2);
+
+                    } else {
+                        console.log("Le document n'existe pas");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erreur lors de la récupération du document :", error);
+                });
+        } else {
+            console.log("UserID manquant dans l'URL");
+        }
+    </script>
+
+</body>
+
+</html>
