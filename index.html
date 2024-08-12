@@ -23,7 +23,7 @@
             width: 400px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            color: white;
+            color: var(--secondaryColor, white);
             position: relative;
             overflow: hidden;
         }
@@ -245,4 +245,52 @@
                         }
 
                         document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
-                        console.log("Nom appliqué :", data.firstName
+                        console.log("Nom appliqué :", data.firstName + ' ' + data.lastName.toUpperCase());
+
+                        document.getElementById('description').innerText = data.description;
+                        console.log("Description appliquée :", data.description);
+
+                        document.getElementById('phone').innerText = data.Phone;
+                        console.log("Numéro de téléphone appliqué :", data.Phone);
+
+                        document.getElementById('email').innerText = data['e-mail'];
+                        console.log("Email appliqué :", data['e-mail']);
+
+                        var socialMediaLinks = {
+                            'Facebook': data.Facebook,
+                            'Instagram': data.Instagram,
+                            'LinkedIn': data.LinkedIn,
+                            'Twitter': data.Twitter
+                        };
+
+                        for (var key in socialMediaLinks) {
+                            if (socialMediaLinks[key]) {
+                                document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
+                                console.log(key + " appliqué :", socialMediaLinks[key]);
+                            }
+                        }
+
+                        if (data.imageUrl) {
+                            document.getElementById('profilePicture').src = data.imageUrl;
+                            console.log("Image de profil appliquée :", data.imageUrl);
+                        }
+
+                        document.getElementById('button1').innerText = data.titleLink1;
+                        document.getElementById('button2').innerText = data.titleLink2;
+                        console.log("Boutons appliqués :", data.titleLink1, data.titleLink2);
+
+                    } else {
+                        console.log("Le document n'existe pas");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erreur lors de la récupération du document :", error);
+                });
+        } else {
+            console.log("UserID manquant dans l'URL");
+        }
+    </script>
+
+</body>
+
+</html>
