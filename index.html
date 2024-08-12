@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coach Profile</title>
     <style>
-        /* Ajoutez ici vos styles CSS */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -17,7 +16,7 @@
             height: 100vh;
         }
         .profile-card {
-            background-color: #ffffff; /* Couleur de fond par défaut */
+            background-color: #ffffff; /* Default background color */
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -37,15 +36,32 @@
             font-size: 14px;
             color: #666666;
         }
-        .profile-card .social-icons a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #666666;
-            font-size: 20px;
-        }
         .social-icons img {
             width: 24px;
             height: 24px;
+            margin: 0 5px;
+        }
+        .custom-links {
+            margin-top: 10px;
+        }
+        .custom-links a {
+            display: block;
+            margin: 5px 0;
+            text-decoration: none;
+            color: #666666;
+            font-size: 14px;
+        }
+        .contact-info {
+            margin-top: 15px;
+        }
+        .contact-info div {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-info img {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -54,8 +70,21 @@
         <img id="profile-image" src="" alt="Profile Picture">
         <h2 id="profile-name">Nom Prénom</h2>
         <p id="profile-description">Description...</p>
+        <div class="contact-info">
+            <div id="phone-container">
+                <img src="phone-icon.png" alt="Phone">
+                <span id="profile-phone"></span>
+            </div>
+            <div id="email-container">
+                <img src="email-icon.png" alt="Email">
+                <span id="profile-email"></span>
+            </div>
+        </div>
         <div class="social-icons" id="social-icons">
-            <!-- Les icônes des réseaux sociaux seront insérées ici -->
+            <!-- Social icons will be inserted here -->
+        </div>
+        <div class="custom-links" id="custom-links">
+            <!-- Custom links will be inserted here -->
         </div>
     </div>
 
@@ -76,24 +105,32 @@
         const firestore = firebase.firestore();
         const auth = firebase.auth();
 
-        // Récupération des données Firestore
         function getProfileData(userId) {
             const docRef = firestore.collection('users').doc(userId).collection('visitcard').doc('visitcarID');
             
             docRef.get().then((doc) => {
                 if (doc.exists) {
                     const data = doc.data();
-                    // Appliquer les données au DOM
+                    // Populate profile card with data
                     document.getElementById('profile-name').textContent = `${data.firstName} ${data.lastName}`;
                     document.getElementById('profile-description').textContent = data.description;
                     document.getElementById('profile-image').src = data.imageUrl || 'default-image-url.png';
-
-                    // Appliquer la couleur de fond
                     document.getElementById('profile-card').style.backgroundColor = data.primaryColor || '#ffffff';
 
-                    // Ajouter les réseaux sociaux
+                    if (data.phone) {
+                        document.getElementById('profile-phone').textContent = data.phone;
+                    } else {
+                        document.getElementById('phone-container').style.display = 'none';
+                    }
+
+                    if (data.email) {
+                        document.getElementById('profile-email').textContent = data.email;
+                    } else {
+                        document.getElementById('email-container').style.display = 'none';
+                    }
+
                     const socialIcons = document.getElementById('social-icons');
-                    socialIcons.innerHTML = ''; // Réinitialiser
+                    socialIcons.innerHTML = '';
                     if (data.Facebook) {
                         socialIcons.innerHTML += `<a href="${data.Facebook}"><img src="facebook-icon.png" alt="Facebook"></a>`;
                     }
@@ -106,6 +143,15 @@
                     if (data.Twitter) {
                         socialIcons.innerHTML += `<a href="${data.Twitter}"><img src="twitter-icon.png" alt="Twitter"></a>`;
                     }
+
+                    const customLinks = document.getElementById('custom-links');
+                    customLinks.innerHTML = '';
+                    if (data.link1) {
+                        customLinks.innerHTML += `<a href="${data.link1}">${data.titleLink1}</a>`;
+                    }
+                    if (data.link2) {
+                        customLinks.innerHTML += `<a href="${data.link2}">${data.titleLink2}</a>`;
+                    }
                 } else {
                     console.error('No such document!');
                 }
@@ -114,7 +160,6 @@
             });
         }
 
-        // Authentification et récupération des données après connexion
         auth.onAuthStateChanged((user) => {
             if (user) {
                 getProfileData(user.uid);
