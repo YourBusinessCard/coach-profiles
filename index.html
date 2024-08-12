@@ -17,7 +17,7 @@
         }
 
         .container {
-            background-color: var(--primaryColor, #537f5d93);
+            background-color: var(--primaryColor, #537f5d);
             padding: 20px;
             border-radius: 16px;
             width: 400px;
@@ -201,8 +201,9 @@
 
                         // Application des couleurs récupérées
                         if (data.primaryColor) {
-                            document.documentElement.style.setProperty('--primaryColor', data.primaryColor);
-                            console.log("Couleur primaire appliquée directement :", data.primaryColor);
+                            let fullColor = data.primaryColor.slice(0, 7); // Retire la partie alpha
+                            document.documentElement.style.setProperty('--primaryColor', fullColor);
+                            console.log("Couleur primaire appliquée sans alpha :", fullColor);
                         }
                         if (data.secondaryColor) {
                             document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
