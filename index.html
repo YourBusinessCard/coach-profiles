@@ -28,6 +28,15 @@
             overflow: hidden;
         }
 
+        .texture-applied {
+            background-color: var(--primaryColor, #537f5d93);
+            background-image: 
+                radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+                radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+
         .profile-picture {
             border-radius: 50%;
             width: 120px;
@@ -248,6 +257,12 @@
                             let rgbaColor = hexToRgba(data.primaryColor);
                             document.getElementById('mainContainer').style.backgroundColor = rgbaColor;
                             console.log("Couleur primaire appliquée en rgba :", rgbaColor);
+                        }
+                        if (data.isTextureApplied) {
+                            document.getElementById('mainContainer').classList.add('texture-applied');
+                            console.log("Texture appliquée");
+                        } else {
+                            console.log("Aucune texture appliquée");
                         }
                         if (data.secondaryColor) {
                             console.log("Couleur secondaire brute : ", data.secondaryColor);
