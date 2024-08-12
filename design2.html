@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design 2 - Carte de Visite</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #1E90FF, #87CEFA); /* Remplacez avec vos couleurs primaires et secondaires */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background-color: #FFF;
+            border-radius: 16px;
+            padding: 16px;
+            width: 350px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            align-items: start;
+        }
+        .header img {
+            border-radius: 8px;
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 16px;
+        }
+        .name-container {
+            background-color: #F0F0F0; /* Couleur de fond du conteneur du nom */
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000; /* Changez en #FFF si `isTextWhite` est true */
+        }
+        .custom-link {
+            display: flex;
+            align-items: center;
+            margin: 4px 0;
+            color: #000; /* Changez en #FFF si `isTextWhite` est true */
+        }
+        .custom-link i {
+            margin-right: 4px;
+        }
+        .section-title {
+            background-color: #F0F0F0; /* Couleur de fond du conteneur "About Me" et "Contact" */
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            margin-top: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000; /* Changez en #FFF si `isTextWhite` est true */
+        }
+        .description {
+            margin-top: 8px;
+            font-size: 16px;
+            color: #000; /* Changez en #FFF si `isTextWhite` est true */
+        }
+        .contact-info {
+            margin-top: 8px;
+            color: #000; /* Changez en #FFF si `isTextWhite` est true */
+        }
+        .contact-info i {
+            margin-right: 8px;
+        }
+        .social-media {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+        }
+        .social-media .icon {
+            margin: 0 4px;
+            width: 40px;
+            height: 40px;
+            background-color: #FFF;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+        }
+        .social-media .icon i {
+            font-size: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <img src="URL_DE_VOTRE_IMAGE" alt="Profile Image">
+            <div class="name-container">
+                <p class="name">Jean Baptiste DUJARDIN</p>
+                <div class="custom-link">
+                    <i class="fas fa-link"></i> 
+                    <span>Custom Link 1</span>
+                </div>
+                <div class="custom-link">
+                    <i class="fas fa-link"></i> 
+                    <span>Custom Link 2</span>
+                </div>
+                <!-- Ajoutez plus de custom links si nécessaire -->
+            </div>
+        </div>
+        <div class="section-title">ABOUT ME</div>
+        <p class="description">Coach sportif depuis 2 ans. Perte de poids, Prise de masse, Gain de muscle.</p>
+        <div class="section-title">CONTACT</div>
+        <div class="contact-info">
+            <p><i class="fas fa-phone"></i> 07-61-30-58-28</p>
+            <p><i class="fas fa-envelope"></i> Jean.Dujardin@exemple.com</p>
+        </div>
+        <div class="social-media">
+            <div class="icon"><i class="fab fa-facebook-f" style="color: #3b5998;"></i></div>
+            <div class="icon"><i class="fab fa-instagram" style="color: #E1306C;"></i></div>
+            <div class="icon"><i class="fab fa-linkedin-in" style="color: #0077B5;"></i></div>
+            <div class="icon"><i class="fab fa-twitter" style="color: #1DA1F2;"></i></div>
+        </div>
+    </div>
+</body>
+</html>
