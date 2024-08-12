@@ -66,7 +66,7 @@
         .contact {
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Alignement à droite */
+            align-items: flex-end;
             margin-bottom: 16px;
             font-size: 16px;
             position: relative;
@@ -76,29 +76,29 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            margin-bottom: -20px; /* Superposition plus importante */
+            margin-bottom: 8px;
             background-color: transparent;
             border: 2px solid white;
-            padding: 5px 10px;
-            border-radius: 50px; /* Pour créer un effet de capsule */
+            padding: 5px 20px 5px 5px; /* Augmentez l'espace à gauche pour l'icône */
+            border-radius: 50px;
             color: var(--secondaryColor, white);
             position: relative;
-            z-index: 1;
+            overflow: visible;
         }
 
         .contact-info:last-child {
-            margin-bottom: 0; /* Éviter le dépassement pour le dernier élément */
-        }
-
-        .contact-info span {
-            margin-right: 10px;
+            margin-bottom: 0;
         }
 
         .contact-info i {
-            background-color: white; /* Arrière-plan blanc autour de l'icône */
+            background-color: white;
             padding: 8px;
             border-radius: 50%;
-            color: var(--secondaryColor, #000); /* Couleur secondaire pour l'icône */
+            color: var(--secondaryColor, #000);
+            position: absolute;
+            right: -15px; /* Superpose le bord du rond avec le contour */
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .social-media {
@@ -119,23 +119,6 @@
             align-items: center;
             text-decoration: none;
             font-size: 18px;
-        }
-
-        /* Couleurs des logos des réseaux sociaux */
-        .social-media a#facebookLink i {
-            color: #3b5998; /* Couleur officielle de Facebook */
-        }
-
-        .social-media a#instagramLink i {
-            color: #e4405f; /* Couleur officielle d'Instagram */
-        }
-
-        .social-media a#linkedinLink i {
-            color: #0077b5; /* Couleur officielle de LinkedIn */
-        }
-
-        .social-media a#twitterLink i {
-            color: #1da1f2; /* Couleur officielle de Twitter */
         }
 
         .buttons {
