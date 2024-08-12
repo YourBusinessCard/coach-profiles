@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carte de Visite</title>
     <style>
         body {
@@ -92,7 +92,7 @@
         }
 
         .social-media a {
-            background-color: var(--secondaryColor, white);
+            background-color: white;
             color: var(--primaryColor, #517694);
             width: 40px;
             height: 40px;
@@ -104,25 +104,21 @@
             font-size: 18px;
         }
 
-        /* Couleurs officielles des réseaux sociaux */
-        .social-media a#facebookLink {
-            background-color: #3b5998; /* Couleur officielle de Facebook */
-            color: white;
+        /* Couleurs des logos des réseaux sociaux */
+        .social-media a#facebookLink i {
+            color: #3b5998; /* Couleur officielle de Facebook */
         }
 
-        .social-media a#instagramLink {
-            background-color: #e4405f; /* Couleur officielle d'Instagram */
-            color: white;
+        .social-media a#instagramLink i {
+            color: #e4405f; /* Couleur officielle d'Instagram */
         }
 
-        .social-media a#linkedinLink {
-            background-color: #0077b5; /* Couleur officielle de LinkedIn */
-            color: white;
+        .social-media a#linkedinLink i {
+            color: #0077b5; /* Couleur officielle de LinkedIn */
         }
 
-        .social-media a#twitterLink {
-            background-color: #1da1f2; /* Couleur officielle de Twitter */
-            color: white;
+        .social-media a#twitterLink i {
+            color: #1da1f2; /* Couleur officielle de Twitter */
         }
 
         .buttons {
@@ -249,52 +245,4 @@
                         }
 
                         document.getElementById('name').innerText = data.firstName + ' ' + data.lastName.toUpperCase();
-                        console.log("Nom appliqué :", data.firstName + ' ' + data.lastName.toUpperCase());
-
-                        document.getElementById('description').innerText = data.description;
-                        console.log("Description appliquée :", data.description);
-
-                        document.getElementById('phone').innerText = data.Phone;
-                        console.log("Numéro de téléphone appliqué :", data.Phone);
-
-                        document.getElementById('email').innerText = data['e-mail'];
-                        console.log("Email appliqué :", data['e-mail']);
-
-                        var socialMediaLinks = {
-                            'Facebook': data.Facebook,
-                            'Instagram': data.Instagram,
-                            'LinkedIn': data.LinkedIn,
-                            'Twitter': data.Twitter
-                        };
-
-                        for (var key in socialMediaLinks) {
-                            if (socialMediaLinks[key]) {
-                                document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
-                                console.log(key + " appliqué :", socialMediaLinks[key]);
-                            }
-                        }
-
-                        if (data.imageUrl) {
-                            document.getElementById('profilePicture').src = data.imageUrl;
-                            console.log("Image de profil appliquée :", data.imageUrl);
-                        }
-
-                        document.getElementById('button1').innerText = data.titleLink1;
-                        document.getElementById('button2').innerText = data.titleLink2;
-                        console.log("Boutons appliqués :", data.titleLink1, data.titleLink2);
-
-                    } else {
-                        console.log("Le document n'existe pas");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Erreur lors de la récupération du document :", error);
-                });
-        } else {
-            console.log("UserID manquant dans l'URL");
-        }
-    </script>
-
-</body>
-
-</html>
+                        console.log("Nom appliqué :", data.firstName
