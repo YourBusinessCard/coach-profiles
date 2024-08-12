@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=`, initial-scale=1.0">
     <title>Carte de Visite</title>
     <style>
         body {
@@ -102,6 +102,27 @@
             align-items: center;
             text-decoration: none;
             font-size: 18px;
+        }
+
+        /* Couleurs officielles des réseaux sociaux */
+        .social-media a#facebookLink {
+            background-color: #3b5998; /* Couleur officielle de Facebook */
+            color: white;
+        }
+
+        .social-media a#instagramLink {
+            background-color: #e4405f; /* Couleur officielle d'Instagram */
+            color: white;
+        }
+
+        .social-media a#linkedinLink {
+            background-color: #0077b5; /* Couleur officielle de LinkedIn */
+            color: white;
+        }
+
+        .social-media a#twitterLink {
+            background-color: #1da1f2; /* Couleur officielle de Twitter */
+            color: white;
         }
 
         .buttons {
@@ -216,6 +237,10 @@
                             console.log("Couleur secondaire brute : ", data.secondaryColor);
                             document.documentElement.style.setProperty('--secondaryColor', data.secondaryColor);
                             console.log("Couleur secondaire appliquée :", data.secondaryColor);
+
+                            // Appliquer la couleur secondaire aux icônes de contact
+                            document.querySelector('.contact-info i.fa-phone-alt').style.color = data.secondaryColor;
+                            document.querySelector('.contact-info i.fa-envelope').style.color = data.secondaryColor;
                         }
                         if (data.containerBackgroundColor) {
                             console.log("Couleur de fond brute : ", data.containerBackgroundColor);
