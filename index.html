@@ -309,10 +309,15 @@
                             }
                         }
 
-                        if (data.imageUrl) {
-                            document.getElementById('profilePicture').src = data.imageUrl;
-                            console.log("Image de profil appliquée :", data.imageUrl);
-                        }
+if (data.imageUrl && data.imageUrl.trim() !== '') {
+    document.getElementById('profilePicture').src = data.imageUrl;
+    console.log("Image de profil appliquée :", data.imageUrl);
+} else {
+    const defaultImageUrl = 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/yourprogram-h00ehw/assets/vl1enjsiuml9/LogoApp.png';
+    document.getElementById('profilePicture').src = defaultImageUrl;
+    console.log("Aucune image définie, image par défaut utilisée :", defaultImageUrl);
+}
+
 
                         document.getElementById('button1').innerText = data.titleLink1;
                         document.getElementById('button2').innerText = data.titleLink2;
