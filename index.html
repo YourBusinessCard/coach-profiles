@@ -302,12 +302,32 @@
                             'Twitter': data.Twitter
                         };
 
-                        for (var key in socialMediaLinks) {
-                            if (socialMediaLinks[key]) {
-                                document.getElementById(key.toLowerCase() + 'Link').href = socialMediaLinks[key];
-                                console.log(key + " appliqué :", socialMediaLinks[key]);
-                            }
-                        }
+const socialMediaContainer = document.querySelector('.social-media');
+for (var key in socialMediaLinks) {
+    const url = socialMediaLinks[key];
+    if (url && url.trim() !== "") {
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = "_blank";
+        a.innerHTML = `<i class="fab fa-${key.toLowerCase()}${key === 'LinkedIn' ? '-in' : (key === 'Facebook' ? '-f' : '')}"></i>`;
+        a.id = key.toLowerCase() + 'Link';
+        socialMediaContainer.appendChild(a);
+        console.log(`${key} affiché :`, url);
+    }
+}
+// Custom buttons (titleLink1 and titleLink2)
+if (data.titleLink1 && data.titleLink1.trim() !== "") {
+    document.getElementById('button1').innerText = data.titleLink1;
+} else {
+    document.getElementById('button1').style.display = 'none';
+}
+
+if (data.titleLink2 && data.titleLink2.trim() !== "") {
+    document.getElementById('button2').innerText = data.titleLink2;
+} else {
+    document.getElementById('button2').style.display = 'none';
+}
+
 
 if (data.imageUrl && data.imageUrl.trim() !== '') {
     document.getElementById('profilePicture').src = data.imageUrl;
